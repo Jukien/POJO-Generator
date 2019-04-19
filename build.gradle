@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '0.4.8'
+}
+
+group 'fr.jukien.intellij.plugins'
+version '1.0.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+// See https://github.com/JetBrains/gradle-intellij-plugin/
+intellij {
+    version 'IU-2019.1.1'
+    plugins = ['DatabaseTools']
+}
+patchPluginXml {
+    changeNotes """
+      Add change notes here.<br>
+      <em>most HTML tags may be used</em>"""
+}

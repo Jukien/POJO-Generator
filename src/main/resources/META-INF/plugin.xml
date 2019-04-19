@@ -1,0 +1,31 @@
+<idea-plugin>
+    <id>fr.jukien.intellij.plugins.pojo-generator</id>
+    <name>POJO Generator</name>
+    <vendor email="julien.diemer@efrei.net" url="http://www.yourcompany.com">Julien DIEMER</vendor>
+
+    <description><![CDATA[
+    Generate Entity POJO from database table.
+    Enter short description for your plugin here.<br>
+    <em>most HTML tags may be used</em>
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <depends>com.intellij.modules.ultimate</depends>
+    <depends>com.intellij.database</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="Entity POJO" class="EntityPOJO" text="Entity POJO" description="Generate Entity POJO">
+            <add-to-group group-id="DatabaseViewPopupMenu" anchor="after" relative-to-action="DatabaseView.RunExtensionScriptGroup"/>
+        </action>
+    </actions>
+</idea-plugin>
