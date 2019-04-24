@@ -24,8 +24,10 @@
 
     <actions>
         <!-- Add your actions here -->
-        <action id="Entity POJO" class="EntityPOJO" text="Entity POJO" description="Generate Entity POJO">
+        <group id="org.jetbrains.tutorials.actions.GroupedActions" text="POJO Generator" popup="true">
             <add-to-group group-id="DatabaseViewPopupMenu" anchor="after" relative-to-action="DatabaseView.RunExtensionScriptGroup"/>
-        </action>
+            <action id="Entity POJO" class="fr.jukien.intellij.plugins.EntityPOJO" text="Entity POJO" description="Generate Entity POJO">
+            </action>
+        </group>
     </actions>
 </idea-plugin>
