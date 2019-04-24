@@ -1,12 +1,11 @@
 <idea-plugin>
     <id>fr.jukien.intellij.plugins.pojo-generator</id>
     <name>POJO Generator</name>
-    <vendor email="julien.diemer@efrei.net" url="http://www.yourcompany.com">Julien DIEMER</vendor>
+    <vendor email="julien.diemer@efrei.net" url="https://github.com/Jukien">Julien DIEMER</vendor>
 
     <description><![CDATA[
     Generate Entity POJO from database table.
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
+    Only works for PostgreSQL for now
     ]]></description>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
