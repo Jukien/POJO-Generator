@@ -28,3 +28,7 @@ patchPluginXml {
     changeNotes """
       New POJO Generator"""
 }
+
+release{
+    versionPropertyFile = 'build.gradle'
+}
