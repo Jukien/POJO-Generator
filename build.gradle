@@ -1,10 +1,11 @@
 plugins {
     id 'java'
     id 'org.jetbrains.intellij' version '0.4.8'
+    id 'net.researchgate.release' version '2.6.0'
 }
 
 group 'fr.jukien.intellij.plugins'
-version '1.0.0-alpha-1'
+version '1.0.0-alpha-2-SNAPSHOT'
 
 sourceCompatibility = 1.8
 

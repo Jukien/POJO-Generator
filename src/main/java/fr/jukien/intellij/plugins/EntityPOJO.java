@@ -6,6 +6,7 @@ import com.intellij.database.util.DasUtil;
 import com.intellij.ide.highlighter.JavaClassFileType;
 import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.command.WriteCommandAction;
+import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
@@ -18,6 +19,7 @@ import com.intellij.psi.PsiFileFactory;
 import com.intellij.psi.codeStyle.NameUtil;
 import com.intellij.psi.impl.file.PsiDirectoryFactory;
 import com.twelvemonkeys.util.LinkedSet;
+import fr.jukien.intellij.plugins.ui.POJOGeneratorSettings;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +33,7 @@ import java.util.Set;
  * @since 1.0.0
  */
 public class EntityPOJO extends AnAction {
+    private POJOGeneratorSettings settings;
     private static final String POSTGRES = "PostgreSQL";
     private static final Map<String, Map<String, String>> map = new HashMap<>();
 
@@ -44,6 +47,9 @@ public class EntityPOJO extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent anActionEvent) {
+        Project project = anActionEvent.getProject();
+        this.settings = ServiceManager.getService(project, POJOGeneratorSettings.class);
+
         PsiElement[] psiElements = anActionEvent.getData(LangDataKeys.PSI_ELEMENT_ARRAY);
         if (psiElements == null || psiElements.length == 0) {
             return;
@@ -56,7 +62,6 @@ public class EntityPOJO extends AnAction {
 
             TableInfo tableInfo = new TableInfo((DbTable) psiElement);
 
-            Project project = anActionEvent.getProject();
             final DataContext dataContext = anActionEvent.getDataContext();
             assert project != null;
             final PsiFile currentFile = DataKeys.PSI_FILE.getData(dataContext);
@@ -79,30 +84,38 @@ public class EntityPOJO extends AnAction {
 
             javaTextFile.append("\n");
             javaTextFile.append("@Entity").append("\n");
-            javaTextFile.append("@Table(name=\"").append(tableInfo.getTableName()).append("\")").append("\n");
+            if (this.settings.getCapitalize()) {
+                javaTextFile.append("@Table(name=\"").append(tableInfo.getTableName().toUpperCase()).append("\")").append("\n");
+            } else {
+                javaTextFile.append("@Table(name=\"").append(tableInfo.getTableName()).append("\")").append("\n");
+            }
             javaTextFile.append("public class ").append(javaName(tableInfo.getTableName(), true)).append(" {").append("\n");
 
             for (Field field : fields) {
                 if (field.getPrimary()) {
-                    javaTextFile.append("@Id").append("\n");
+                    javaTextFile.append("    @Id").append("\n");
                 }
-                javaTextFile.append("@Column(name=\"").append(field.getName()).append("\")").append("\n");
-                javaTextFile.append("private ").append(field.getJavaType()).append(" ").append(javaName(field.getName(), false)).append(";").append("\n");
+                if (this.settings.getCapitalize()) {
+                    javaTextFile.append("    @Column(name=\"").append(field.getName().toUpperCase()).append("\")").append("\n");
+                } else {
+                    javaTextFile.append("    @Column(name=\"").append(field.getName()).append("\")").append("\n");
+                }
+                javaTextFile.append("    private ").append(field.getJavaType()).append(" ").append(javaName(field.getName(), false)).append(";").append("\n");
                 javaTextFile.append("\n");
             }
 
             javaTextFile.append("\n");
 
             for (Field field : fields) {
-                javaTextFile.append("public ").append(field.getJavaType()).append(" get").append(javaName(field.getName(), true)).append("() {").append("\n");
-                javaTextFile.append("return this.").append(javaName(field.getName(), false)).append(";").append("\n");
-                javaTextFile.append("}").append("\n");
+                javaTextFile.append("    public ").append(field.getJavaType()).append(" get").append(javaName(field.getName(), true)).append("() {").append("\n");
+                javaTextFile.append("        return this.").append(javaName(field.getName(), false)).append(";").append("\n");
+                javaTextFile.append("    }").append("\n");
 
                 javaTextFile.append("\n");
 
-                javaTextFile.append("public void set").append(javaName(field.getName(), true)).append("(").append(field.getJavaType()).append(" ").append(javaName(field.getName(), false)).append(") {").append("\n");
-                javaTextFile.append("this.").append(javaName(field.getName(), false)).append(" = ").append(javaName(field.getName(), false)).append(";").append("\n");
-                javaTextFile.append("}").append("\n");
+                javaTextFile.append("    public void set").append(javaName(field.getName(), true)).append("(").append(field.getJavaType()).append(" ").append(javaName(field.getName(), false)).append(") {").append("\n");
+                javaTextFile.append("        this.").append(javaName(field.getName(), false)).append(" = ").append(javaName(field.getName(), false)).append(";").append("\n");
+                javaTextFile.append("    }").append("\n");
             }
 
             javaTextFile.append("}").append("\n");
@@ -130,13 +143,13 @@ public class EntityPOJO extends AnAction {
         return fields;
     }
 
-    public String javaName(String str, Boolean capitalize) {
+    public String javaName(String str, Boolean capitalizeFirstLetter) {
         String[] strings = NameUtil.splitNameIntoWords(str);
         StringBuilder name = new StringBuilder();
 
         for (int i = 0; strings.length > i; i++) {
             if (i == 0) {
-                if (capitalize) {
+                if (capitalizeFirstLetter) {
                     name.append(convertToTitleCaseIteratingChars(strings[i]));
                 } else {
                     name.append(strings[i].toLowerCase());

@@ -19,6 +19,8 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
+        <projectConfigurable groupId="tools" displayName="POJO Generator" id="tools.POJOGeneratorConfigurable" instance="fr.jukien.intellij.plugins.ui.POJOGeneratorConfigurable"/>
+        <projectService serviceImplementation="fr.jukien.intellij.plugins.ui.POJOGeneratorSettings"/>
     </extensions>
 
     <actions>
