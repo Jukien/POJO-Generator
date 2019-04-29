@@ -4,8 +4,58 @@
     <vendor email="julien.diemer@efrei.net" url="https://github.com/Jukien">Julien DIEMER</vendor>
 
     <description><![CDATA[
-    Generate an Entity POJO from database table.<br/>
-    Only works with PostgreSQL for now
+    Can generate from database table:<br/>
+<ul>
+    <li>
+        an JPA Entity (JPA Annotated POJO) without relationship between table.<br/>
+        The JPA annotations are generates over attributes.
+    </li>
+    <li>
+        a Data Transfert Object
+    </li>
+</ul>
+<br/>
+For now, only works with <b>PostgreSQL</b>.
+<br/><br/>
+
+Below the mapping table used by the plugin:<br/><br/>
+<table>
+    <thead>
+    <tr>
+        <th>DBMS</th>
+        <th>SQL DataType</th>
+        <th>Java DataType</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>PostgreSQL</td>
+        <td>bigint</td>
+        <td>Long</td>
+    </tr>
+    <tr>
+        <td>PostgreSQL</td>
+        <td>integer</td>
+        <td>Long</td>
+    </tr>
+    <tr>
+        <td>PostgreSQL</td>
+        <td>boolean</td>
+        <td>Boolean</td>
+    </tr>
+    <tr>
+        <td>PostgreSQL</td>
+        <td>varchar</td>
+        <td>String</td>
+    </tr>
+    <tr>
+        <td>PostgreSQL</td>
+        <td>date</td>
+        <td>java.sql.Date</td>
+    </tr>
+    </tbody>
+</table>
+
     ]]></description>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
@@ -25,10 +75,10 @@
 
     <actions>
         <!-- Add your actions here -->
-        <group id="org.jetbrains.tutorials.actions.GroupedActions" text="POJO Generator" popup="true">
+        <group id="org.jetbrains.tutorials.actions.GroupedActions" text="POJO Generator" popup="true" icon="/META-INF/pluginIcon.svg">
             <add-to-group group-id="DatabaseViewPopupMenu" anchor="after" relative-to-action="DatabaseView.RunExtensionScriptGroup"/>
-            <action id="Entity POJO" class="fr.jukien.intellij.plugins.EntityPOJO" text="Entity POJO" description="Generate Entity POJO">
-            </action>
+            <action id="entity" class="fr.jukien.intellij.plugins.action.Entity" text="Entity" description="Generate an Entity" icon="/META-INF/pluginIcon.svg"/>
+            <action id="dto" class="fr.jukien.intellij.plugins.action.DTO" text="DTO" description="Generate a Data Transfert Object" icon="/META-INF/pluginIcon.svg"/>
         </group>
     </actions>
 </idea-plugin>

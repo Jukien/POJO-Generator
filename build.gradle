@@ -1,11 +1,10 @@
 plugins {
     id 'java'
     id 'org.jetbrains.intellij' version '0.4.8'
-    id 'net.researchgate.release' version '2.6.0'
 }
 
-group 'fr.jukien.intellij.plugins'
-version '1.0.0-alpha-2-SNAPSHOT'
+group '${project.groupId}'
+version '${project.version}'
 
 sourceCompatibility = 1.8
 
@@ -26,9 +25,6 @@ intellij {
 
 patchPluginXml {
     changeNotes """
-      New POJO Generator"""
-}
-
-release{
-    versionPropertyFile = 'build.gradle'
+      Can generate a Data Transfert Object from database table
+      """
 }

@@ -17,10 +17,10 @@ import org.jetbrains.annotations.Nullable;
 @State(
         name = "POJOGeneratorSettings",
         storages = {
-                @Storage("test.xml")}
+                @Storage("POJOGeneratorSettings.xml")}
 )
 public class POJOGeneratorSettings implements PersistentStateComponent<POJOGeneratorSettings> {
-    private boolean capitalize;
+    private Boolean capitalize;
 
     public POJOGeneratorSettings() {
         capitalize = false;
@@ -37,11 +37,11 @@ public class POJOGeneratorSettings implements PersistentStateComponent<POJOGener
         XmlSerializerUtil.copyBean(state, this);
     }
 
-    public boolean getCapitalize() {
+    public Boolean getCapitalize() {
         return capitalize;
     }
 
-    public void setCapitalize(boolean capitalize) {
+    public void setCapitalize(Boolean capitalize) {
         this.capitalize = capitalize;
     }
 }

@@ -29,7 +29,7 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package fr.jukien.intellij.plugins;
+package fr.jukien.intellij.plugins.util;
 
 import com.google.common.collect.Lists;
 import com.intellij.database.model.DasColumn;

@@ -1,4 +1,4 @@
-package fr.jukien.intellij.plugins;
+package fr.jukien.intellij.plugins.util;
 
 import com.intellij.database.model.DataType;
 

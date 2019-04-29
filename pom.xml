@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>fr.jukien.intellij.plugins</groupId>
+    <artifactId>pojo-generator</artifactId>
+    <version>1.0.0-alpha-2-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>12</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.0.0-M2</version>
+                <executions>
+                    <execution>
+                        <id>enforce-java</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireJavaVersion>
+                                    <!-- Requirement for gradle-maven-plugin -->
+                                    <version>[1.8]</version>
+                                </requireJavaVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-gradle-project</id>
+                        <!-- here the phase you need -->
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>/</directory>
+                                    <includes>
+                                        <include>src/**</include>
+                                        <include>gradle.properties</include>
+                                        <include>settings.gradle</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                            <outputDirectory>${basedir}/target/gradle</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-build.gradle-filtered</id>
+                        <!-- here the phase you need -->
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>/</directory>
+                                    <includes>
+                                        <include>build.gradle</include>
+                                    </includes>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                            <outputDirectory>${basedir}/target/gradle</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <skipMain>true</skipMain>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>codes.rafael.gradlemavenplugin</groupId>
+                <artifactId>gradle-maven-plugin</artifactId>
+                <version>1.0.10</version>
+                <configuration>
+                    <gradleVersion>5.4.1</gradleVersion>
+                    <gradleProjectDirectory>${basedir}/target/gradle</gradleProjectDirectory>
+                    <tasks>
+                        <!-- this would effectively call "gradle doSomething" -->
+                        <task>clean</task>
+                        <task>buildPlugin</task>
+                    </tasks>
+                </configuration>
+                <executions>
+                    <execution>
+                        <!-- You can bind this to any phase you like -->
+                        <phase>install</phase>
+                        <goals>
+                            <!-- goal must be "invoke" -->
+                            <goal>invoke</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
