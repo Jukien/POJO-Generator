@@ -129,4 +129,8 @@
             </plugin>
         </plugins>
     </build>
+
+    <scm>
+        <developerConnection>scm:git:https://${github.username}:${github.password}@github.com/Jukien/POJO-Generator.git</developerConnection>
+    </scm>
 </project>
