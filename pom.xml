@@ -130,7 +130,14 @@
         </plugins>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>${deployment.repository.id}</id>
+            <url>${deployment.repository.url}</url>
+        </repository>
+    </distributionManagement>
+
     <scm>
-        <developerConnection>scm:git:https://${github.username}:${github.password}@github.com/Jukien/POJO-Generator.git</developerConnection>
+        <developerConnection>scm:git:https://github.com/Jukien/POJO-Generator.git</developerConnection>
     </scm>
 </project>
