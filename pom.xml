@@ -22,12 +22,25 @@
         <module>pojo-generator-install</module>
     </modules>
 
-    <!--<distributionManagement>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <distributionManagement>
         <repository>
             <id>${deployment.repository.id}</id>
             <url>${deployment.repository.url}</url>
         </repository>
-    </distributionManagement>-->
+    </distributionManagement>
 
     <scm>
         <developerConnection>scm:git:https://github.com/Jukien/POJO-Generator.git</developerConnection>
