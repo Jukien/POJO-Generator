@@ -4,7 +4,7 @@
     <parent>
         <artifactId>pojo-generator-parent</artifactId>
         <groupId>fr.jukien.intellij.plugins</groupId>
-        <version>1.0.0-alpha-3-SNAPSHOT</version>
+        <version>1.0.0-alpha-2-SNAPSHOT</version>
     </parent>
 
     <artifactId>pojo-generator-install</artifactId>
@@ -88,6 +88,10 @@
                 <executions>
                     <execution>
                         <id>default-cli</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>github-release</goal>
+                        </goals>
                         <configuration>
                             <owner>Jukien</owner>
                             <repository>POJO-Generator</repository>
