@@ -102,8 +102,7 @@
                             <!--                            <body>release description overwritten by release notes</body>-->
                             <releaseNotes>${basedir}/src/site/markdown/note-version.md</releaseNotes>
                             <assets>
-                                <asset>../pojo-generator/target/checkout/target/gradle/build/distributions/${project.artifactId}-${project.version}.zip</asset>
-                                <!--                                <asset>src/main/resources/asset-zip-example.zip</asset>-->
+                                <asset>../pojo-generator/target/checkout/target/gradle/build/distributions/pojo-generator-${project.version}.zip</asset>
                             </assets>
                         </configuration>
                     </execution>
