@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>pojo-generator-parent</artifactId>
@@ -62,8 +63,8 @@
                             <outputDirectory>${basedir}/src/site/markdown</outputDirectory>
                         </configuration>
                     </execution>
-                    <!--<execution>
-                        <id>copy-angular-dist-to-install-packaging</id>
+                    <execution>
+                        <id>copy-build-plugin-to-install-packaging</id>
                         <phase>generate-resources</phase>
                         <goals>
                             <goal>copy-resources</goal>
@@ -71,14 +72,14 @@
                         <configuration>
                             <resources>
                                 <resource>
-                                    <directory>../pojo-generator/target/checkout/target/gradle/build/distributions</directory>
-                                    &lt;!&ndash;<include>*.md</include>&ndash;&gt;
-                                    &lt;!&ndash;<filtering>true</filtering>&ndash;&gt;
+                                    <directory>../pojo-generator/target/gradle/build/distributions</directory>
+                                    <!--<include>*.md</include>-->
+                                    <!--<filtering>true</filtering>-->
                                 </resource>
                             </resources>
-                            <outputDirectory>target/gradle/build/distributions</outputDirectory>
+                            <outputDirectory>target/install/plugin</outputDirectory>
                         </configuration>
-                    </execution>-->
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -102,7 +103,7 @@
                             <!--                            <body>release description overwritten by release notes</body>-->
                             <releaseNotes>${basedir}/src/site/markdown/note-version.md</releaseNotes>
                             <assets>
-                                <asset>../pojo-generator/target/checkout/target/gradle/build/distributions/pojo-generator-${project.version}.zip</asset>
+                                <asset>${basedir}/target/install/plugin/pojo-generator-${project.version}.zip</asset>
                             </assets>
                         </configuration>
                     </execution>
