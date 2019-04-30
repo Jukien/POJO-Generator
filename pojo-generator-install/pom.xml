@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>pojo-generator-parent</artifactId>
+        <groupId>fr.jukien.intellij.plugins</groupId>
+        <version>1.0.0-alpha-2-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>pojo-generator-install</artifactId>
+    <packaging>pom</packaging>
+
+    <name>POJO Generator :: Install</name>
+
+    <properties>
+        <!-- Timestamp (utilisé dans la fiche version par exemple) -->
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>dd/MM/yyyy</maven.build.timestamp.format>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>src/site/markdown</directory>
+                            <includes>
+                                <include>**/*</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.2</version>
+                <!--<dependencies>
+                    <dependency>
+                        <groupId>${project.parent.groupId}</groupId>
+                        <artifactId>pojo-generator</artifactId>
+                        <version>${project.parent.version}</version>
+                    </dependency>
+                </dependencies>-->
+                <executions>
+                    <execution>
+                        <id>copy-documentation</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/src/assembly/documentation</directory>
+                                    <include>*.md</include>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                            <outputDirectory>${basedir}/src/site/markdown</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <!--<execution>
+                        <id>copy-angular-dist-to-install-packaging</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>../pojo-generator/target/checkout/target/gradle/build/distributions</directory>
+                                    &lt;!&ndash;<include>*.md</include>&ndash;&gt;
+                                    &lt;!&ndash;<filtering>true</filtering>&ndash;&gt;
+                                </resource>
+                            </resources>
+                            <outputDirectory>target/gradle/build/distributions</outputDirectory>
+                        </configuration>
+                    </execution>-->
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.ragedunicorn.tools.maven</groupId>
+                <artifactId>github-release-maven-plugin</artifactId>
+                <version>1.0.1</version>
+                <executions>
+                    <execution>
+                        <id>default-cli</id>
+                        <configuration>
+                            <owner>Jukien</owner>
+                            <repository>POJO-Generator</repository>
+                            <server>github</server>
+                            <tagName>v${project.version}</tagName>
+                            <name>Version ${project.version}</name>
+                            <!--                            <targetCommitish>master</targetCommitish>-->
+                            <!--                            <body>release description overwritten by release notes</body>-->
+                            <releaseNotes>${basedir}/src/site/markdown/note-version.md</releaseNotes>
+                            <assets>
+                                <asset>../pojo-generator/target/checkout/target/gradle/build/distributions/${project.artifactId}-${project.version}.zip</asset>
+                                <!--                                <asset>src/main/resources/asset-zip-example.zip</asset>-->
+                            </assets>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
