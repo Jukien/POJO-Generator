@@ -15,7 +15,7 @@
     </li>
 </ul>
 <br/>
-For now, only works with <b>PostgreSQL</b>.
+For now, only works for some DataType with <b>MySQL</b>, <b>Oracle</b> & <b>PostgreSQL</b>.
 <br/><br/>
 
 Below the mapping table used by the plugin:<br/><br/>
@@ -29,13 +29,55 @@ Below the mapping table used by the plugin:<br/><br/>
     </thead>
     <tbody>
     <tr>
-        <td>PostgreSQL</td>
+        <td>MySQL</td>
         <td>bigint</td>
         <td>Long</td>
     </tr>
     <tr>
+        <td>MySQL</td>
+        <td>bit</td>
+        <td>Boolean</td>
+    </tr>
+    <tr>
+        <td>MySQL</td>
+        <td>double</td>
+        <td>Double</td>
+    </tr>
+    <tr>
+        <td>MySQL</td>
+        <td>int</td>
+        <td>Integer</td>
+    </tr>
+    <tr>
+        <td>MySQL</td>
+        <td>json</td>
+        <td>String</td>
+    </tr>
+    <tr>
+        <td>MySQL</td>
+        <td>varchar</td>
+        <td>String</td>
+    </tr>
+
+    <tr>
+        <td>Oracle</td>
+        <td>DATE</td>
+        <td>java.sql.Date</td>
+    </tr>
+    <tr>
+        <td>Oracle</td>
+        <td>NUMBER</td>
+        <td>Long</td>
+    </tr>
+    <tr>
+        <td>Oracle</td>
+        <td>VARCHAR2</td>
+        <td>String</td>
+    </tr>
+
+    <tr>
         <td>PostgreSQL</td>
-        <td>integer</td>
+        <td>bigint</td>
         <td>Long</td>
     </tr>
     <tr>
@@ -45,13 +87,18 @@ Below the mapping table used by the plugin:<br/><br/>
     </tr>
     <tr>
         <td>PostgreSQL</td>
-        <td>varchar</td>
-        <td>String</td>
+        <td>date</td>
+        <td>java.sql.Date</td>
     </tr>
     <tr>
         <td>PostgreSQL</td>
-        <td>date</td>
-        <td>java.sql.Date</td>
+        <td>integer</td>
+        <td>Long</td>
+    </tr>
+    <tr>
+        <td>PostgreSQL</td>
+        <td>varchar</td>
+        <td>String</td>
     </tr>
     </tbody>
 </table>

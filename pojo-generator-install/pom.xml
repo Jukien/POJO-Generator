@@ -88,7 +88,7 @@
                 <executions>
                     <execution>
                         <id>default-cli</id>
-                        <phase>deploy</phase>
+                        <phase>${github-release-maven-plugin.phase}</phase>
                         <goals>
                             <goal>github-release</goal>
                         </goals>

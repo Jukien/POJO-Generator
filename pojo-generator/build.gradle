@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.jetbrains.intellij' version '0.4.8'
+    id 'org.jetbrains.intellij' version '0.4.9'
 }
 
 group '${project.groupId}'
@@ -19,12 +19,16 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version 'IU-2019.1.1'
+    version 'IU-2019.1.3'
     plugins = ['DatabaseTools']
 }
 
 patchPluginXml {
     changeNotes """
-      Can generate a Data Transfert Object from database table
+      [Add] DataType
+      [Add] MySQL Database support
+      [Add] Oracle Database support
+      [Improvement] When database is not supported, actions are disabled
+      [Improvement] When we generate a POJO, the directory choosing window position the user where he was the last time
       """
 }

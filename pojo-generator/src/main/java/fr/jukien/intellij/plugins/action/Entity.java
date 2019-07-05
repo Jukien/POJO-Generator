@@ -2,7 +2,9 @@ package fr.jukien.intellij.plugins.action;
 
 import com.intellij.database.psi.DbTable;
 import com.intellij.ide.highlighter.JavaClassFileType;
-import com.intellij.openapi.actionSystem.*;
+import com.intellij.openapi.actionSystem.AnAction;
+import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.fileChooser.FileChooser;
@@ -18,11 +20,12 @@ import com.intellij.psi.impl.file.PsiDirectoryFactory;
 import fr.jukien.intellij.plugins.ui.POJOGeneratorSettings;
 import fr.jukien.intellij.plugins.util.Field;
 import fr.jukien.intellij.plugins.util.TableInfo;
+import org.apache.commons.lang.StringUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
-import static fr.jukien.intellij.plugins.util.Util.getFields;
-import static fr.jukien.intellij.plugins.util.Util.javaName;
+import static fr.jukien.intellij.plugins.util.Util.*;
 
 /**
  * Created on 19/04/2019
@@ -33,10 +36,16 @@ import static fr.jukien.intellij.plugins.util.Util.javaName;
  */
 public class Entity extends AnAction {
     private POJOGeneratorSettings settings;
+    private String actionText = StringUtils.EMPTY;
+    private VirtualFile lastChoosedFile;
 
     @Override
     public void actionPerformed(AnActionEvent anActionEvent) {
-        Project project = anActionEvent.getProject();
+        final Project project = anActionEvent.getProject();
+        if (null == project) {
+            return;
+        }
+
         this.settings = ServiceManager.getService(project, POJOGeneratorSettings.class);
 
         PsiElement[] psiElements = anActionEvent.getData(LangDataKeys.PSI_ELEMENT_ARRAY);
@@ -50,16 +59,13 @@ public class Entity extends AnAction {
             }
 
             TableInfo tableInfo = new TableInfo((DbTable) psiElement);
-
-            final DataContext dataContext = anActionEvent.getDataContext();
-            final PsiFile currentFile = DataKeys.PSI_FILE.getData(dataContext);
             VirtualFile chooseFile = project.getBaseDir();
-            if (currentFile != null) {
-                chooseFile = currentFile.getVirtualFile();
-            }
             FileChooserDescriptor descriptor = FileChooserDescriptorFactory.createSingleFolderDescriptor();
-            chooseFile = FileChooser.chooseFile(descriptor, project, chooseFile);
-            if (chooseFile == null) {
+            if (null != lastChoosedFile) {
+                chooseFile = lastChoosedFile;
+            }
+            lastChoosedFile = FileChooser.chooseFile(descriptor, project, chooseFile);
+            if (lastChoosedFile == null) {
                 return;
             }
 
@@ -91,29 +97,24 @@ public class Entity extends AnAction {
                 javaTextFile.append("\n");
             }
 
-            for (Field field : fields) {
-                javaTextFile.append("\n");
-
-                javaTextFile.append("    public ").append(field.getJavaType()).append(" get").append(javaName(field.getName(), true)).append("() {").append("\n");
-                javaTextFile.append("        return this.").append(javaName(field.getName(), false)).append(";").append("\n");
-                javaTextFile.append("    }").append("\n");
-
-                javaTextFile.append("\n");
-
-                javaTextFile.append("    public void set").append(javaName(field.getName(), true)).append("(").append(field.getJavaType()).append(" ").append(javaName(field.getName(), false)).append(") {").append("\n");
-                javaTextFile.append("        this.").append(javaName(field.getName(), false)).append(" = ").append(javaName(field.getName(), false)).append(";").append("\n");
-                javaTextFile.append("    }").append("\n");
-            }
-
-            javaTextFile.append("}").append("\n");
-
+            addGetterSetter(fields, javaTextFile);
 
             PsiFile file = PsiFileFactory.getInstance(project).createFileFromText(javaName(tableInfo.getTableName(), true) + ".java", JavaClassFileType.INSTANCE, javaTextFile);
-            PsiDirectory psiDirectory = PsiDirectoryFactory.getInstance(project).createDirectory(chooseFile);
+            PsiDirectory psiDirectory = PsiDirectoryFactory.getInstance(project).createDirectory(lastChoosedFile);
 
             Runnable r = () -> psiDirectory.add(file);
 
             WriteCommandAction.runWriteCommandAction(project, r);
         }
+    }
+
+    @Override
+    public void update(@NotNull AnActionEvent anActionEvent) {
+        if (actionText.isEmpty()) {
+            actionText = anActionEvent.getPresentation().getText();
+        }
+
+        if (checkActionVisibility(anActionEvent, actionText)) return;
+        super.update(anActionEvent);
     }
 }
