@@ -37,7 +37,6 @@ import static fr.jukien.intellij.plugins.util.Util.*;
 public class Entity extends AnAction {
     private POJOGeneratorSettings settings;
     private String actionText = StringUtils.EMPTY;
-    private VirtualFile lastChoosedFile;
 
     @Override
     public void actionPerformed(AnActionEvent anActionEvent) {
@@ -114,7 +113,7 @@ public class Entity extends AnAction {
             actionText = anActionEvent.getPresentation().getText();
         }
 
-        if (checkActionVisibility(anActionEvent, actionText)) return;
+        checkActionVisibility(anActionEvent, actionText);
         super.update(anActionEvent);
     }
 }

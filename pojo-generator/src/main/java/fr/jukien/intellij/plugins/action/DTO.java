@@ -34,7 +34,6 @@ import static fr.jukien.intellij.plugins.util.Util.*;
  */
 public class DTO extends AnAction {
     private String actionText = StringUtils.EMPTY;
-    private VirtualFile lastChoosedFile;
 
     @Override
     public void actionPerformed(AnActionEvent anActionEvent) {
@@ -94,7 +93,7 @@ public class DTO extends AnAction {
             actionText = anActionEvent.getPresentation().getText();
         }
 
-        if (checkActionVisibility(anActionEvent, actionText)) return;
+        checkActionVisibility(anActionEvent, actionText);
         super.update(anActionEvent);
     }
 }

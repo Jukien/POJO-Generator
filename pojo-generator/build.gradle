@@ -22,13 +22,3 @@ intellij {
     version 'IU-2019.1.3'
     plugins = ['DatabaseTools']
 }
-
-patchPluginXml {
-    changeNotes """
-      [Add] DataType
-      [Add] MySQL Database support
-      [Add] Oracle Database support
-      [Improvement] When database is not supported, actions are disabled
-      [Improvement] When we generate a POJO, the directory choosing window position the user where he was the last time
-      """
-}

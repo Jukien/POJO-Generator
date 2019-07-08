@@ -6,6 +6,7 @@ import com.intellij.database.util.DasUtil;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.codeStyle.NameUtil;
 import com.twelvemonkeys.util.LinkedSet;
@@ -27,6 +28,8 @@ public class Util {
     private static final String ORACLE = "Oracle";
     private static final String POSTGRES = "PostgreSQL";
     private static final Map<String, Map<String, String>> map = new HashMap<>();
+
+    public static VirtualFile lastChoosedFile;
 
     static {
         map.put(MYSQL, new HashMap<>());
@@ -130,24 +133,28 @@ public class Util {
         }
     }
 
-    public static boolean checkActionVisibility(@NotNull AnActionEvent anActionEvent, String actionText) {
+    public static void checkActionVisibility(@NotNull AnActionEvent anActionEvent, String actionText) {
         final Project project = anActionEvent.getProject();
         if (null == project) {
-            return true;
+            return;
         }
 
         PsiElement[] psiElements = anActionEvent.getData(LangDataKeys.PSI_ELEMENT_ARRAY);
         if (psiElements == null || psiElements.length == 0) {
-            return true;
+            return;
         }
 
-        if (isDatabaseSupported(psiElements)) {
-            anActionEvent.getPresentation().setEnabled(true);
+        if (psiElements[0] instanceof DbTable) {
+            if (isDatabaseSupported(psiElements)) {
+                anActionEvent.getPresentation().setEnabled(true);
+            } else {
+                anActionEvent.getPresentation().setEnabled(false);
+                anActionEvent.getPresentation().setText(String.format("%s : database not supported", actionText));
+            }
         } else {
             anActionEvent.getPresentation().setEnabled(false);
-            anActionEvent.getPresentation().setText(String.format("%s : database not supported", actionText));
+            anActionEvent.getPresentation().setText(String.format("%s : please, select a table", actionText));
         }
-        return false;
     }
 
     public static Map<String, Map<String, String>> getMap() {

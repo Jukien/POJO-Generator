@@ -4,6 +4,8 @@
     <vendor email="julien.diemer@efrei.net" url="https://github.com/Jukien">Julien DIEMER</vendor>
 
     <description><![CDATA[
+    <h1>Generate JPA Entity POJO from database table</h1>
+    <br/>
     Can generate from database table:<br/>
 <ul>
     <li>
@@ -104,6 +106,17 @@ Below the mapping table used by the plugin:<br/><br/>
 </table>
 
     ]]></description>
+
+    <change-notes><![CDATA[
+    <ul>
+        <li>[Add] DataType</li>
+        <li>[Add] MySQL Database support</li>
+        <li>[Add] Oracle Database support</li>
+        <li>[Improvement] When database is not supported, actions are disabled</li>
+        <li>[Improvement] When we generate a POJO, the directory choosing window position the user where he was the last time</li>
+        <li>[Improvement] If the user select an element which is not a table, actions are disabled</li>
+    </ul>
+    ]]></change-notes>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
