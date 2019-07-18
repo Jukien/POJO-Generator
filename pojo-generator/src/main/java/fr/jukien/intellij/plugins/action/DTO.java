@@ -59,7 +59,7 @@ public class DTO extends AnAction {
                 chooseFile = lastChoosedFile;
             }
             lastChoosedFile = FileChooser.chooseFile(descriptor, project, chooseFile);
-            if (lastChoosedFile == null) {
+            if (null == lastChoosedFile) {
                 return;
             }
 
@@ -79,7 +79,7 @@ public class DTO extends AnAction {
             addGetterSetter(fields, javaTextFile);
 
             PsiFile file = PsiFileFactory.getInstance(project).createFileFromText(javaName(tableInfo.getTableName(), true) + "DTO.java", JavaClassFileType.INSTANCE, javaTextFile);
-            PsiDirectory psiDirectory = PsiDirectoryFactory.getInstance(project).createDirectory(chooseFile);
+            PsiDirectory psiDirectory = PsiDirectoryFactory.getInstance(project).createDirectory(lastChoosedFile);
 
             Runnable r = () -> psiDirectory.add(file);
 

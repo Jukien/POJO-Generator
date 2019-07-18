@@ -35,6 +35,8 @@ public class Util {
         map.put(MYSQL, new HashMap<>());
         map.get(MYSQL).put("bigint", "Long");
         map.get(MYSQL).put("bit", "Boolean");
+        map.get(MYSQL).put("date", "java.sql.Date");
+        map.get(MYSQL).put("datetime", "java.sql.Timestamp");
         map.get(MYSQL).put("double", "Double");
         map.get(MYSQL).put("int", "Integer");
         map.get(MYSQL).put("json", "String");

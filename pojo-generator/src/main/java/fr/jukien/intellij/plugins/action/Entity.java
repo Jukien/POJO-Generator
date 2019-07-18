@@ -64,7 +64,7 @@ public class Entity extends AnAction {
                 chooseFile = lastChoosedFile;
             }
             lastChoosedFile = FileChooser.chooseFile(descriptor, project, chooseFile);
-            if (lastChoosedFile == null) {
+            if (null == lastChoosedFile) {
                 return;
             }
 
