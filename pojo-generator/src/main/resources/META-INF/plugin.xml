@@ -14,7 +14,7 @@
             <li>There is no relationship between table</li>
             <li>JPA annotations are generates over attributes</li>
             <li>GeneratedValue annotations if sequence over column are auto generated (Tested with MySQL)</li>
-        <ul>
+        </ul>
     </li>
     <li>
         a Data Transfert Object
