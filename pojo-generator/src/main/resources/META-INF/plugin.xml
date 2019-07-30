@@ -9,8 +9,12 @@
     Can generate from database table:<br/>
 <ul>
     <li>
-        an JPA Entity (JPA Annotated POJO) without relationship between table.<br/>
-        The JPA annotations are generates over attributes.
+        an JPA Entity (JPA Annotated POJO)
+        <ul>
+            <li>There is no relationship between table</li>
+            <li>JPA annotations are generates over attributes</li>
+            <li>GeneratedValue annotations if sequence over column are auto generated (Tested with MySQL)</li>
+        <ul>
     </li>
     <li>
         a Data Transfert Object
@@ -27,6 +31,7 @@ Below the mapping table used by the plugin:<br/><br/>
         <th>DBMS</th>
         <th>SQL DataType</th>
         <th>Java DataType</th>
+        <th>JPA columnDefinition</th>
     </tr>
     </thead>
     <tbody>
@@ -71,6 +76,12 @@ Below the mapping table used by the plugin:<br/><br/>
         <td>String</td>
     </tr>
 
+    <tr>
+        <td>Oracle</td>
+        <td>CHAR</td>
+        <td>String</td>
+        <td>CHAR</td>
+    </tr>
     <tr>
         <td>Oracle</td>
         <td>DATE</td>
@@ -118,10 +129,9 @@ Below the mapping table used by the plugin:<br/><br/>
 
     <change-notes><![CDATA[
     <ul>
-        <li>[Add] MySQL datatype : date</li>
-        <li>[Add] MySQL datatype : datetime</li>
-        <li>[Fixed] When generate a DTO file, the path choosed by the user wasn't take in count</li>
-        <li>[Modification] The plugin will be only compatible for Java IDE</li>
+        <li>[Add] ORACLE datatype : CHAR (with columnDefinition)</li>
+        <li>[Add] Possibility to add @GeneratedValue annotation over column which have auto increment sequence (Tested with MySQL)</li>
+        <li>[Modification] Compatible from 2019.1</li>
     </ul>
     ]]></change-notes>
 

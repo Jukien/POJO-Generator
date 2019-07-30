@@ -37,13 +37,6 @@
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>3.0.2</version>
-                <!--<dependencies>
-                    <dependency>
-                        <groupId>${project.parent.groupId}</groupId>
-                        <artifactId>pojo-generator</artifactId>
-                        <version>${project.parent.version}</version>
-                    </dependency>
-                </dependencies>-->
                 <executions>
                     <execution>
                         <id>copy-documentation</id>
@@ -72,8 +65,6 @@
                             <resources>
                                 <resource>
                                     <directory>../pojo-generator/target/gradle/build/distributions</directory>
-                                    <!--<include>*.md</include>-->
-                                    <!--<filtering>true</filtering>-->
                                 </resource>
                             </resources>
                             <outputDirectory>target/install/plugin</outputDirectory>
@@ -98,8 +89,6 @@
                             <server>github</server>
                             <tagName>v${project.version}</tagName>
                             <name>Version ${project.version}</name>
-                            <!--                            <targetCommitish>master</targetCommitish>-->
-                            <!--                            <body>release description overwritten by release notes</body>-->
                             <releaseNotes>${basedir}/src/site/markdown/note-version.md</releaseNotes>
                             <assets>
                                 <asset>${basedir}/target/install/plugin/pojo-generator-${project.version}.zip</asset>

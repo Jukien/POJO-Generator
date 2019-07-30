@@ -2,6 +2,14 @@
 
 ##### Version ${parent.version} - Published on ${timestamp}
 ###### New
+- \[Add] ORACLE datatype : CHAR (with columnDefinition)
+- \[Add] Possibility to add @GeneratedValue annotation over column which have auto increment sequence (Tested with MySQL)
+- \[Modification] Compatible from 2019.1
+
+***        
+
+##### Version 1.0.1 - Published on 18/07/2019
+###### New
 - \[Add] MySQL datatype : date
 - \[Add] MySQL datatype : datetime
 - \[Modification] The plugin will be only compatible for Java IDE
