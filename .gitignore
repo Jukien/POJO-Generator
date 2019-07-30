@@ -1,2 +1,4 @@
 .gradle/
 .idea/
+/pojo-generator-parent.iml
+/pojo-generator/build/
