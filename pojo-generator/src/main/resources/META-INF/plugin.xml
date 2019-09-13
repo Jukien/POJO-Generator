@@ -21,10 +21,10 @@
     </li>
 </ul>
 <br/>
-For now, only works for some DataType with <b>MySQL</b>, <b>Oracle</b> & <b>PostgreSQL</b>.
+Works with <b>MySQL</b>, <b>Oracle</b> & <b>PostgreSQL</b>.
 <br/><br/>
 
-Below the mapping table used by the plugin:<br/><br/>
+Below the default mapping table used by the plugin:<br/><br/>
 <table>
     <thead>
     <tr>
