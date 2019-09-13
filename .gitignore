@@ -1,4 +1,6 @@
 .gradle/
 .idea/
-/pojo-generator-parent.iml
+target/
+*.iml
 /pojo-generator/build/
+/pojo-generator-install/src/site/markdown/

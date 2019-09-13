@@ -2,11 +2,20 @@
 
 ##### Version ${parent.version} - Published on ${timestamp}
 ###### New
+- \[Add] Possibility to customize the JPA mapping
+
+###### Fixed
+- GitHub [#2](https://github.com/Jukien/POJO-Generator/issues/2): Settings for New Projects were not saved
+
+***
+
+##### Version 1.1.0 - Published on 30/07/2019
+###### New
 - \[Add] ORACLE datatype : CHAR (with columnDefinition)
 - \[Add] Possibility to add @GeneratedValue annotation over column which have auto increment sequence (Tested with MySQL)
 - \[Modification] Compatible from 2019.1
 
-***        
+***
 
 ##### Version 1.0.1 - Published on 18/07/2019
 ###### New

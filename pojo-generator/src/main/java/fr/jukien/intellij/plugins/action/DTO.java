@@ -6,6 +6,7 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.command.WriteCommandAction;
+import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
@@ -16,6 +17,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiFileFactory;
 import com.intellij.psi.impl.file.PsiDirectoryFactory;
+import fr.jukien.intellij.plugins.ui.JPAMappingSettings;
 import fr.jukien.intellij.plugins.util.Field;
 import fr.jukien.intellij.plugins.util.TableInfo;
 import org.apache.commons.lang.StringUtils;
@@ -42,6 +44,8 @@ public class DTO extends AnAction {
             return;
         }
 
+        final JPAMappingSettings jpaMappingSettings = ServiceManager.getService(project, JPAMappingSettings.class);
+
         PsiElement[] psiElements = anActionEvent.getData(LangDataKeys.PSI_ELEMENT_ARRAY);
         if (psiElements == null || psiElements.length == 0) {
             return;
@@ -63,7 +67,7 @@ public class DTO extends AnAction {
                 return;
             }
 
-            Set<Field> fields = getFields((DbTable) psiElement);
+            Set<Field> fields = getFields((DbTable) psiElement, jpaMappingSettings);
 
             StringBuilder javaTextFile = new StringBuilder();
             //javaTextFile.append("\n");

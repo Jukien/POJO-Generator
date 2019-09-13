@@ -129,9 +129,8 @@ Below the mapping table used by the plugin:<br/><br/>
 
     <change-notes><![CDATA[
     <ul>
-        <li>[Add] ORACLE datatype : CHAR (with columnDefinition)</li>
-        <li>[Add] Possibility to add @GeneratedValue annotation over column which have auto increment sequence (Tested with MySQL)</li>
-        <li>[Modification] Compatible from 2019.1</li>
+        <li>[Add] Possibility to customize the JPA mapping</li>
+        <li>[Fixed] <a href="https://github.com/Jukien/POJO-Generator/issues/2">GitHub #2</a>(): Settings for New Projects were not saved</li>
     </ul>
     ]]></change-notes>
 
@@ -147,8 +146,11 @@ Below the mapping table used by the plugin:<br/><br/>
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
-        <projectConfigurable groupId="tools" displayName="POJO Generator" id="tools.POJOGeneratorConfigurable" instance="fr.jukien.intellij.plugins.ui.POJOGeneratorConfigurable"/>
-        <projectService serviceImplementation="fr.jukien.intellij.plugins.ui.POJOGeneratorSettings"/>
+        <projectConfigurable groupId="tools" displayName="POJO Generator" id="pojo-generator" instance="fr.jukien.intellij.plugins.ui.POJOGeneratorConfigurable">
+            <configurable id="pojo-generator.jpa-mapping" displayName="JPA Mapping" instance="fr.jukien.intellij.plugins.ui.JPAMappingConfigurable"/>
+        </projectConfigurable>
+        <applicationService serviceImplementation="fr.jukien.intellij.plugins.ui.POJOGeneratorSettings"/>
+        <applicationService serviceImplementation="fr.jukien.intellij.plugins.ui.JPAMappingSettings"/>
     </extensions>
 
     <actions>
