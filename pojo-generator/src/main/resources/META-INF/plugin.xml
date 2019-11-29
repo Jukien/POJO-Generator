@@ -166,8 +166,7 @@ Below the default mapping table used by the plugin:<br/><br/>
     -->
 
     <depends>com.intellij.modules.java</depends>
-    <depends>com.intellij.modules.ultimate</depends>
-    <depends>com.intellij.modules.database</depends>
+    <depends>com.intellij.database</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->

@@ -18,7 +18,8 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version 'IU-2019.3'
+    version 'LATEST-EAP-SNAPSHOT'
+    type 'IU'
     plugins = ['java', 'DatabaseTools']
 }
 
