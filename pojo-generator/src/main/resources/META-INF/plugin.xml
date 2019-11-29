@@ -8,22 +8,18 @@
     <br/>
     Can generate from database table:<br/>
 <ul>
-    <li>
-        an JPA Entity (JPA Annotated POJO)
+    <li>an JPA Entity (JPA Annotated POJO)
         <ul>
             <li>There is no relationship between table</li>
             <li>JPA annotations are generates over attributes</li>
             <li>GeneratedValue annotations if sequence over column are auto generated (Tested with MySQL)</li>
         </ul>
     </li>
-    <li>
-        a Data Transfert Object
-    </li>
+    <li>a Data Transfert Object</li>
 </ul>
 <br/>
 Works with <b>MySQL</b>, <b>Oracle</b> & <b>PostgreSQL</b>.
 <br/><br/>
-
 Below the default mapping table used by the plugin:<br/><br/>
 <table>
     <thead>
@@ -57,8 +53,23 @@ Below the default mapping table used by the plugin:<br/><br/>
     </tr>
     <tr>
         <td>MySQL</td>
+        <td>decimal</td>
+        <td>BigDecimal</td>
+    </tr>
+    <tr>
+        <td>MySQL</td>
         <td>double</td>
         <td>Double</td>
+    </tr>
+    <tr>
+        <td>MySQL</td>
+        <td>enum</td>
+        <td>String</td>
+    </tr>
+    <tr>
+        <td>MySQL</td>
+        <td>float</td>
+        <td>Float</td>
     </tr>
     <tr>
         <td>MySQL</td>
@@ -72,10 +83,19 @@ Below the default mapping table used by the plugin:<br/><br/>
     </tr>
     <tr>
         <td>MySQL</td>
+        <td>text</td>
+        <td>String</td>
+    </tr>
+    <tr>
+        <td>MySQL</td>
+        <td>timestamp</td>
+        <td>java.sql.Timestamp</td>
+    </tr>
+    <tr>
+        <td>MySQL</td>
         <td>varchar</td>
         <td>String</td>
     </tr>
-
     <tr>
         <td>Oracle</td>
         <td>CHAR</td>
@@ -94,10 +114,14 @@ Below the default mapping table used by the plugin:<br/><br/>
     </tr>
     <tr>
         <td>Oracle</td>
+        <td>TIMESTAMP</td>
+        <td>java.sql.Timestamp</td>
+    </tr>
+    <tr>
+        <td>Oracle</td>
         <td>VARCHAR2</td>
         <td>String</td>
     </tr>
-
     <tr>
         <td>PostgreSQL</td>
         <td>bigint</td>
@@ -130,6 +154,7 @@ Below the default mapping table used by the plugin:<br/><br/>
     <change-notes><![CDATA[
     <ul>
         <li>[New] <a href="https://github.com/Jukien/POJO-Generator/issues/4">GitHub #4</a>: Add compatibility with IntelliJ IDEA 2019.3 (Ultimate Edition)</li>
+        <li>[Add] New default mapping types</li>
         <li>[Fixed] <a href="https://github.com/Jukien/POJO-Generator/issues/5">GitHub #5</a>: Settings are not saved at project level</li>
     </ul>
     ]]></change-notes>

@@ -3,6 +3,7 @@
 ##### Version ${parent.version} - Published on ${timestamp}
 ###### New
 - GitHub [#4](https://github.com/Jukien/POJO-Generator/issues/4): Add compatibility with IntelliJ IDEA 2019.3 (Ultimate Edition)
+- \[Add] New default mapping types
 
 ###### Fixed
 - GitHub [#5](https://github.com/Jukien/POJO-Generator/issues/5): Settings are not saved at project level
