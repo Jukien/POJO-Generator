@@ -29,7 +29,7 @@
                             <rules>
                                 <requireJavaVersion>
                                     <!-- Requirement for gradle-maven-plugin -->
-                                    <version>[1.8, 1.9)</version>
+                                    <version>[11, 12)</version>
                                 </requireJavaVersion>
                             </rules>
                         </configuration>
@@ -105,7 +105,7 @@
                 <artifactId>gradle-maven-plugin</artifactId>
                 <version>1.0.10</version>
                 <configuration>
-                    <gradleVersion>5.6.2</gradleVersion>
+                    <gradleVersion>6.0.1</gradleVersion>
                     <gradleProjectDirectory>${basedir}/target/gradle</gradleProjectDirectory>
                     <tasks>
                         <!-- this would effectively call "gradle doSomething" -->

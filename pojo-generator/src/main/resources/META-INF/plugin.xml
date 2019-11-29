@@ -129,8 +129,8 @@ Below the default mapping table used by the plugin:<br/><br/>
 
     <change-notes><![CDATA[
     <ul>
-        <li>[Add] Possibility to customize the JPA mapping</li>
-        <li>[Fixed] <a href="https://github.com/Jukien/POJO-Generator/issues/2">GitHub #2</a>: Settings for New Projects were not saved</li>
+        <li>[New] <a href="https://github.com/Jukien/POJO-Generator/issues/4">GitHub #4</a>: Add compatibility with IntelliJ IDEA 2019.3 (Ultimate Edition)</li>
+        <li>[Fixed] <a href="https://github.com/Jukien/POJO-Generator/issues/5">GitHub #5</a>: Settings are not saved at project level</li>
     </ul>
     ]]></change-notes>
 

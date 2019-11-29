@@ -1,12 +1,12 @@
 plugins {
     id 'java'
-    id 'org.jetbrains.intellij' version '0.4.9'
+    id 'org.jetbrains.intellij' version '0.4.14'
 }
 
 group '${project.groupId}'
 version '${project.version}'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 11
 
 repositories {
     mavenCentral()
@@ -18,7 +18,7 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version 'IU-2019.2'
+    version 'IU-2019.3'
     plugins = ['java', 'DatabaseTools']
 }
 
