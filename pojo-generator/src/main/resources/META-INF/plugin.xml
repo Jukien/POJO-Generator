@@ -149,8 +149,8 @@ Below the default mapping table used by the plugin:<br/><br/>
         <projectConfigurable groupId="tools" displayName="POJO Generator" id="pojo-generator" instance="fr.jukien.intellij.plugins.ui.POJOGeneratorConfigurable">
             <configurable id="pojo-generator.jpa-mapping" displayName="JPA Mapping" instance="fr.jukien.intellij.plugins.ui.JPAMappingConfigurable"/>
         </projectConfigurable>
-        <applicationService serviceImplementation="fr.jukien.intellij.plugins.ui.POJOGeneratorSettings"/>
-        <applicationService serviceImplementation="fr.jukien.intellij.plugins.ui.JPAMappingSettings"/>
+        <projectService serviceImplementation="fr.jukien.intellij.plugins.ui.POJOGeneratorSettings"/>
+        <projectService serviceImplementation="fr.jukien.intellij.plugins.ui.JPAMappingSettings"/>
     </extensions>
 
     <actions>

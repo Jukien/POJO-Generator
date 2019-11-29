@@ -2,6 +2,15 @@
 
 ##### Version ${parent.version} - Published on ${timestamp}
 ###### New
+- GitHub [#4](https://github.com/Jukien/POJO-Generator/issues/4): Add compatibility with IntelliJ IDEA 2019.3 (Ultimate Edition)
+
+###### Fixed
+- GitHub [#5](https://github.com/Jukien/POJO-Generator/issues/5): Settings are not saved at project level
+
+***
+
+##### Version 2.0.0 - Published on 16/09/2019
+###### New
 - \[Add] Possibility to customize the JPA mapping
 
 ###### Fixed
