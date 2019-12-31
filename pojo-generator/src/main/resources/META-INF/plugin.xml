@@ -153,9 +153,7 @@ Below the default mapping table used by the plugin:<br/><br/>
 
     <change-notes><![CDATA[
     <ul>
-        <li>[New] <a href="https://github.com/Jukien/POJO-Generator/issues/4">GitHub #4</a>: Add compatibility with IntelliJ IDEA 2019.3 (Ultimate Edition)</li>
-        <li>[Add] New default mapping types</li>
-        <li>[Fixed] <a href="https://github.com/Jukien/POJO-Generator/issues/5">GitHub #5</a>: Settings are not saved at project level</li>
+        <li>[New] <a href="https://github.com/Jukien/POJO-Generator/issues/6">GitHub #6</a>: Keep folders location for entities and DTOs files</li>
     </ul>
     ]]></change-notes>
 

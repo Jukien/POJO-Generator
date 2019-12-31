@@ -2,6 +2,12 @@
 
 ##### Version ${parent.version} - Published on ${timestamp}
 ###### New
+- GitHub [#6](https://github.com/Jukien/POJO-Generator/issues/6): Keep folders location for entities and DTOs files
+
+***
+
+##### Version 2.0.1 - Published on 29/11/2019
+###### New
 - GitHub [#4](https://github.com/Jukien/POJO-Generator/issues/4): Add compatibility with IntelliJ IDEA 2019.3 (Ultimate Edition)
 - \[Add] New default mapping types
 

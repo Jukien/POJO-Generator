@@ -11,6 +11,7 @@ import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
@@ -18,11 +19,15 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiFileFactory;
 import com.intellij.psi.impl.file.PsiDirectoryFactory;
 import fr.jukien.intellij.plugins.ui.JPAMappingSettings;
+import fr.jukien.intellij.plugins.ui.POJOGeneratorSettings;
 import fr.jukien.intellij.plugins.util.Field;
 import fr.jukien.intellij.plugins.util.TableInfo;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Set;
 
 import static fr.jukien.intellij.plugins.util.Util.*;
@@ -31,7 +36,7 @@ import static fr.jukien.intellij.plugins.util.Util.*;
  * Created on 25/04/2019
  *
  * @author JDI
- * @version 1.0.0
+ * @version 2.1.0
  * @since 1.0.0
  */
 public class DTO extends AnAction {
@@ -44,6 +49,7 @@ public class DTO extends AnAction {
             return;
         }
 
+        final POJOGeneratorSettings pojoGeneratorSettings = ServiceManager.getService(project, POJOGeneratorSettings.class);
         final JPAMappingSettings jpaMappingSettings = ServiceManager.getService(project, JPAMappingSettings.class);
 
         PsiElement[] psiElements = anActionEvent.getData(LangDataKeys.PSI_ELEMENT_ARRAY);
@@ -57,37 +63,51 @@ public class DTO extends AnAction {
             }
 
             TableInfo tableInfo = new TableInfo((DbTable) psiElement);
-            VirtualFile chooseFile = project.getBaseDir();
-            FileChooserDescriptor descriptor = FileChooserDescriptorFactory.createSingleFolderDescriptor();
-            if (null != lastChoosedFile) {
-                chooseFile = lastChoosedFile;
+            if (null != project.getBasePath()) {
+                Path projectPath = Paths.get(project.getBasePath());
+                VirtualFile chooseFile = null;
+                try {
+                    chooseFile = VfsUtil.findFileByURL(projectPath.toUri().toURL());
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                FileChooserDescriptor descriptor = FileChooserDescriptorFactory.createSingleFolderDescriptor();
+                if (null != pojoGeneratorSettings.getDtoFolderPath()) {
+                    try {
+                        chooseFile = VfsUtil.findFileByURL(Paths.get(pojoGeneratorSettings.getDtoFolderPath()).toUri().toURL());
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+                }
+                lastChoosedFile = FileChooser.chooseFile(descriptor, project, chooseFile);
+                if (null == lastChoosedFile) {
+                    return;
+                } else {
+                    pojoGeneratorSettings.setDtoFolderPath(lastChoosedFile.getPath());
+                }
+
+                Set<Field> fields = getFields((DbTable) psiElement, jpaMappingSettings);
+
+                StringBuilder javaTextFile = new StringBuilder();
+                //javaTextFile.append("\n");
+                //javaTextFile.append("import javax.persistence.*;").append("\n");
+
+                javaTextFile.append("\n");
+                javaTextFile.append("public class ").append(javaName(tableInfo.getTableName(), true)).append("DTO {").append("\n");
+
+                for (Field field : fields) {
+                    javaTextFile.append("    private ").append(field.getJavaType()).append(" ").append(javaName(field.getName(), false)).append(";").append("\n");
+                }
+
+                addGetterSetter(fields, javaTextFile);
+
+                PsiFile file = PsiFileFactory.getInstance(project).createFileFromText(javaName(tableInfo.getTableName(), true) + "DTO.java", JavaClassFileType.INSTANCE, javaTextFile);
+                PsiDirectory psiDirectory = PsiDirectoryFactory.getInstance(project).createDirectory(lastChoosedFile);
+
+                Runnable r = () -> psiDirectory.add(file);
+
+                WriteCommandAction.runWriteCommandAction(project, r);
             }
-            lastChoosedFile = FileChooser.chooseFile(descriptor, project, chooseFile);
-            if (null == lastChoosedFile) {
-                return;
-            }
-
-            Set<Field> fields = getFields((DbTable) psiElement, jpaMappingSettings);
-
-            StringBuilder javaTextFile = new StringBuilder();
-            //javaTextFile.append("\n");
-            //javaTextFile.append("import javax.persistence.*;").append("\n");
-
-            javaTextFile.append("\n");
-            javaTextFile.append("public class ").append(javaName(tableInfo.getTableName(), true)).append("DTO {").append("\n");
-
-            for (Field field : fields) {
-                javaTextFile.append("    private ").append(field.getJavaType()).append(" ").append(javaName(field.getName(), false)).append(";").append("\n");
-            }
-
-            addGetterSetter(fields, javaTextFile);
-
-            PsiFile file = PsiFileFactory.getInstance(project).createFileFromText(javaName(tableInfo.getTableName(), true) + "DTO.java", JavaClassFileType.INSTANCE, javaTextFile);
-            PsiDirectory psiDirectory = PsiDirectoryFactory.getInstance(project).createDirectory(lastChoosedFile);
-
-            Runnable r = () -> psiDirectory.add(file);
-
-            WriteCommandAction.runWriteCommandAction(project, r);
         }
     }
 
