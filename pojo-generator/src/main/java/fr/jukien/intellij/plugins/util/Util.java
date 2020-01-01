@@ -1,6 +1,7 @@
 package fr.jukien.intellij.plugins.util;
 
 import com.intellij.database.model.DasColumn;
+import com.intellij.database.model.DasForeignKey;
 import com.intellij.database.psi.DbTable;
 import com.intellij.database.util.DasUtil;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -53,6 +54,16 @@ public class Util {
             }
             field.setPrimary(DasUtil.isPrimary(column));
             fields.add(field);
+        }
+
+        for (DasForeignKey dasForeignKey : DasUtil.getForeignKeys(dbTable)) {
+            dasForeignKey.getColumnsRef().names().forEach(s -> {
+                fields.forEach(field -> {
+                    if (field.getName().equals(s)) {
+                        field.setForeignKey(true);
+                    }
+                });
+            });
         }
         return fields;
     }

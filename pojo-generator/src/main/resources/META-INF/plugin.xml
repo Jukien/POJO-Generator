@@ -154,6 +154,7 @@ Below the default mapping table used by the plugin:<br/><br/>
     <change-notes><![CDATA[
     <ul>
         <li>[New] <a href="https://github.com/Jukien/POJO-Generator/issues/6">GitHub #6</a>: Keep folders location for entities and DTOs files</li>
+        <li>[New] <a href="https://github.com/Jukien/POJO-Generator/issues/8">GitHub #8</a>: Add @ManyToOne and @JoinColumn annotations on columns with foreign key</li>
         <li>[Fixed] <a href="https://github.com/Jukien/POJO-Generator/issues/7">GitHub #7</a>: Error when the file already exists</li>
     </ul>
     ]]></change-notes>

@@ -112,19 +112,29 @@ public class Entity extends AnAction {
                         javaTextFile.append("    @GeneratedValue(strategy = GenerationType.IDENTITY)").append("\n");
                     }
                     if (pojoGeneratorSettings.getCapitalize()) {
-                        javaTextFile.append("    @Column(name = \"").append(field.getName().toUpperCase()).append("\"");
-                        if (null != field.getColumnDefinition()) {
-                            javaTextFile.append(", columnDefinition = \"");
-                            javaTextFile.append(field.getColumnDefinition());
-                            javaTextFile.append("\"");
+                        if (pojoGeneratorSettings.getWithRelationshipAnnotations() && field.getForeignKey()) {
+                            javaTextFile.append("    @ManyToOne").append("\n");
+                            javaTextFile.append("    @JoinColumn(name = \"").append(field.getName().toUpperCase()).append("\"");
+                        } else {
+                            javaTextFile.append("    @Column(name = \"").append(field.getName().toUpperCase()).append("\"");
+                            if (null != field.getColumnDefinition()) {
+                                javaTextFile.append(", columnDefinition = \"");
+                                javaTextFile.append(field.getColumnDefinition());
+                                javaTextFile.append("\"");
+                            }
                         }
                         javaTextFile.append(")").append("\n");
                     } else {
-                        javaTextFile.append("    @Column(name = \"").append(field.getName()).append("\"");
-                        if (null != field.getColumnDefinition()) {
-                            javaTextFile.append(", columnDefinition = \"");
-                            javaTextFile.append(field.getColumnDefinition());
-                            javaTextFile.append("\"");
+                        if (pojoGeneratorSettings.getWithRelationshipAnnotations() && field.getForeignKey()) {
+                            javaTextFile.append("    @ManyToOne").append("\n");
+                            javaTextFile.append("    @JoinColumn(name = \"").append(field.getName()).append("\"");
+                        } else {
+                            javaTextFile.append("    @Column(name = \"").append(field.getName()).append("\"");
+                            if (null != field.getColumnDefinition()) {
+                                javaTextFile.append(", columnDefinition = \"");
+                                javaTextFile.append(field.getColumnDefinition());
+                                javaTextFile.append("\"");
+                            }
                         }
                         javaTextFile.append(")").append("\n");
                     }
