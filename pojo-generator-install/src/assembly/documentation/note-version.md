@@ -4,6 +4,9 @@
 ###### New
 - GitHub [#6](https://github.com/Jukien/POJO-Generator/issues/6): Keep folders location for entities and DTOs files
 
+###### Fixed
+- GitHub [#7](https://github.com/Jukien/POJO-Generator/issues/7): Error when the file already exists
+
 ***
 
 ##### Version 2.0.1 - Published on 29/11/2019
