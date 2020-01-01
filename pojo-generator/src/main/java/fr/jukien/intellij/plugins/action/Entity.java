@@ -2,6 +2,9 @@ package fr.jukien.intellij.plugins.action;
 
 import com.intellij.database.psi.DbTable;
 import com.intellij.ide.highlighter.JavaClassFileType;
+import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationType;
+import com.intellij.notification.Notifications;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
@@ -131,12 +134,18 @@ public class Entity extends AnAction {
 
                 addGetterSetter(fields, javaTextFile);
 
-                PsiFile file = PsiFileFactory.getInstance(project).createFileFromText(javaName(tableInfo.getTableName(), true) + ".java", JavaClassFileType.INSTANCE, javaTextFile);
+                String fileName = javaName(tableInfo.getTableName(), true) + ".java";
+                PsiFile file = PsiFileFactory.getInstance(project).createFileFromText(fileName, JavaClassFileType.INSTANCE, javaTextFile);
                 PsiDirectory psiDirectory = PsiDirectoryFactory.getInstance(project).createDirectory(lastChoosedFile);
 
-                Runnable r = () -> psiDirectory.add(file);
+                if (null == psiDirectory.findFile(file.getName())) {
+                    Runnable r = () -> psiDirectory.add(file);
 
-                WriteCommandAction.runWriteCommandAction(project, r);
+                    WriteCommandAction.runWriteCommandAction(project, r);
+                } else {
+                    Notification notification = new Notification("POJO Generator", "POJO Generator", String.format("The file [%s] already exists", fileName), NotificationType.WARNING, null);
+                    Notifications.Bus.notify(notification, project);
+                }
             }
         }
     }
