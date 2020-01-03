@@ -51,35 +51,35 @@ public class Entity extends AnAction {
             return;
         }
 
-        for (PsiElement psiElement : psiElements) {
-            if (!(psiElement instanceof DbTable)) {
-                continue;
+        if (null != project.getBasePath()) {
+            Path projectPath = Paths.get(project.getBasePath());
+            VirtualFile chooseFile = null;
+            try {
+                chooseFile = VfsUtil.findFileByURL(projectPath.toUri().toURL());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
             }
-
-            TableInfo tableInfo = new TableInfo((DbTable) psiElement);
-            if (null != project.getBasePath()) {
-                Path projectPath = Paths.get(project.getBasePath());
-                VirtualFile chooseFile = null;
+            FileChooserDescriptor descriptor = FileChooserDescriptorFactory.createSingleFolderDescriptor();
+            if (null != pojoGeneratorSettings.getEntityFolderPath()) {
                 try {
-                    chooseFile = VfsUtil.findFileByURL(projectPath.toUri().toURL());
+                    chooseFile = VfsUtil.findFileByURL(Paths.get(pojoGeneratorSettings.getEntityFolderPath()).toUri().toURL());
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
-                FileChooserDescriptor descriptor = FileChooserDescriptorFactory.createSingleFolderDescriptor();
-                if (null != pojoGeneratorSettings.getEntityFolderPath()) {
-                    try {
-                        chooseFile = VfsUtil.findFileByURL(Paths.get(pojoGeneratorSettings.getEntityFolderPath()).toUri().toURL());
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
-                    }
-                }
-                lastChoosedFile = FileChooser.chooseFile(descriptor, project, chooseFile);
-                if (null == lastChoosedFile) {
-                    return;
-                } else {
-                    pojoGeneratorSettings.setEntityFolderPath(lastChoosedFile.getPath());
+            }
+            lastChoosedFile = FileChooser.chooseFile(descriptor, project, chooseFile);
+            if (null == lastChoosedFile) {
+                return;
+            } else {
+                pojoGeneratorSettings.setEntityFolderPath(lastChoosedFile.getPath());
+            }
+
+            for (PsiElement psiElement : psiElements) {
+                if (!(psiElement instanceof DbTable)) {
+                    continue;
                 }
 
+                TableInfo tableInfo = new TableInfo((DbTable) psiElement);
                 Set<Field> fields = getFields((DbTable) psiElement, jpaMappingSettings);
 
                 StringBuilder javaTextFile = new StringBuilder();
