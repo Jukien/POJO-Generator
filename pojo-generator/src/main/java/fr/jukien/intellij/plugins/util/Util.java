@@ -4,12 +4,21 @@ import com.intellij.database.model.DasColumn;
 import com.intellij.database.model.DasForeignKey;
 import com.intellij.database.psi.DbTable;
 import com.intellij.database.util.DasUtil;
+import com.intellij.ide.highlighter.JavaClassFileType;
+import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationType;
+import com.intellij.notification.Notifications;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
+import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiFileFactory;
 import com.intellij.psi.codeStyle.NameUtil;
+import com.intellij.psi.impl.file.PsiDirectoryFactory;
 import com.twelvemonkeys.util.LinkedSet;
 import fr.jukien.intellij.plugins.ui.ConfigurableJPAMapping;
 import fr.jukien.intellij.plugins.ui.DBMSFamily;
@@ -166,5 +175,27 @@ public class Util {
             names.add(dbmsFamily.getName());
         }
         return names;
+    }
+
+    /**
+     * Create file
+     *
+     * @param project
+     * @param javaTextFile
+     * @param fileName
+     * @since 2.1.0
+     */
+    public static void createFile(Project project, StringBuilder javaTextFile, String fileName) {
+        PsiFile file = PsiFileFactory.getInstance(project).createFileFromText(fileName, JavaClassFileType.INSTANCE, javaTextFile);
+        PsiDirectory psiDirectory = PsiDirectoryFactory.getInstance(project).createDirectory(lastChoosedFile);
+
+        if (null == psiDirectory.findFile(file.getName())) {
+            Runnable r = () -> psiDirectory.add(file);
+
+            WriteCommandAction.runWriteCommandAction(project, r);
+        } else {
+            Notification notification = new Notification("POJO Generator", "POJO Generator", String.format("The file [%s] already exists", fileName), NotificationType.WARNING, null);
+            Notifications.Bus.notify(notification, project);
+        }
     }
 }

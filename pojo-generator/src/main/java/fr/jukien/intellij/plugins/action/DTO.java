@@ -1,11 +1,9 @@
 package fr.jukien.intellij.plugins.action;
 
 import com.intellij.database.psi.DbTable;
-import com.intellij.ide.highlighter.JavaClassFileType;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
-import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
@@ -13,11 +11,7 @@ import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiFileFactory;
-import com.intellij.psi.impl.file.PsiDirectoryFactory;
 import fr.jukien.intellij.plugins.ui.JPAMappingSettings;
 import fr.jukien.intellij.plugins.ui.POJOGeneratorSettings;
 import fr.jukien.intellij.plugins.util.Field;
@@ -101,12 +95,8 @@ public class DTO extends AnAction {
 
                 addGetterSetter(fields, javaTextFile);
 
-                PsiFile file = PsiFileFactory.getInstance(project).createFileFromText(javaName(tableInfo.getTableName(), true) + "DTO.java", JavaClassFileType.INSTANCE, javaTextFile);
-                PsiDirectory psiDirectory = PsiDirectoryFactory.getInstance(project).createDirectory(lastChoosedFile);
-
-                Runnable r = () -> psiDirectory.add(file);
-
-                WriteCommandAction.runWriteCommandAction(project, r);
+                String fileName = javaName(tableInfo.getTableName(), true) + "DTO.java";
+                createFile(project, javaTextFile, fileName);
             }
         }
     }
