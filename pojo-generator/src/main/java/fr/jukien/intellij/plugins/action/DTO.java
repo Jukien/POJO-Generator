@@ -81,13 +81,14 @@ public class DTO extends AnAction {
 
                 TableInfo tableInfo = new TableInfo((DbTable) psiElement);
                 Set<Field> fields = getFields((DbTable) psiElement, jpaMappingSettings);
+                String className = String.format("%s%s%s", pojoGeneratorSettings.getPrefixDto(), javaName(tableInfo.getTableName(), true), pojoGeneratorSettings.getSuffixDto());
 
                 StringBuilder javaTextFile = new StringBuilder();
                 //javaTextFile.append("\n");
                 //javaTextFile.append("import javax.persistence.*;").append("\n");
 
                 javaTextFile.append("\n");
-                javaTextFile.append("public class ").append(javaName(tableInfo.getTableName(), true)).append("DTO {").append("\n");
+                javaTextFile.append("public class ").append(className).append(" {").append("\n");
 
                 for (Field field : fields) {
                     javaTextFile.append("    private ").append(field.getJavaType()).append(" ").append(javaName(field.getName(), false)).append(";").append("\n");
@@ -95,7 +96,7 @@ public class DTO extends AnAction {
 
                 addGetterSetter(fields, javaTextFile);
 
-                String fileName = javaName(tableInfo.getTableName(), true) + "DTO.java";
+                String fileName = String.format("%s%s", className, ".java");
                 createFile(project, javaTextFile, fileName);
             }
         }

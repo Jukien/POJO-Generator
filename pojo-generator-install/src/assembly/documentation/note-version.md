@@ -5,6 +5,7 @@
 - GitHub [#1](https://github.com/Jukien/POJO-Generator/issues/1): Ask only once the path to store files when we select multiple tables for generation
 - GitHub [#6](https://github.com/Jukien/POJO-Generator/issues/6): Keep folders location for entities and DTOs files
 - GitHub [#8](https://github.com/Jukien/POJO-Generator/issues/8): Add @ManyToOne and @JoinColumn annotations on columns with foreign key
+- GitHub [#9](https://github.com/Jukien/POJO-Generator/issues/9): Add the ability to customize the prefix and suffix of file names
 
 ###### Fixed
 - GitHub [#7](https://github.com/Jukien/POJO-Generator/issues/7): Error when the file already exists

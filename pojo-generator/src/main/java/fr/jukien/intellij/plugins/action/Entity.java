@@ -81,6 +81,7 @@ public class Entity extends AnAction {
 
                 TableInfo tableInfo = new TableInfo((DbTable) psiElement);
                 Set<Field> fields = getFields((DbTable) psiElement, jpaMappingSettings);
+                String className = String.format("%s%s%s", pojoGeneratorSettings.getPrefixEntity(), javaName(tableInfo.getTableName(), true), pojoGeneratorSettings.getSuffixEntity());
 
                 StringBuilder javaTextFile = new StringBuilder();
                 javaTextFile.append("\n");
@@ -93,7 +94,7 @@ public class Entity extends AnAction {
                 } else {
                     javaTextFile.append("@Table(name = \"").append(tableInfo.getTableName()).append("\")").append("\n");
                 }
-                javaTextFile.append("public class ").append(javaName(tableInfo.getTableName(), true)).append(" {").append("\n");
+                javaTextFile.append("public class ").append(className).append(" {").append("\n");
 
                 for (Field field : fields) {
                     if (field.getPrimary()) {
@@ -135,7 +136,7 @@ public class Entity extends AnAction {
 
                 addGetterSetter(fields, javaTextFile);
 
-                String fileName = javaName(tableInfo.getTableName(), true) + ".java";
+                String fileName = String.format("%s%s", className, ".java");
                 createFile(project, javaTextFile, fileName);
             }
         }

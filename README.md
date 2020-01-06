@@ -22,6 +22,7 @@ Example of the User DTO class:
 
 1. You can capitalize table name and column name in annotation
 2. You can add @GeneratedValue annotations over column which have auto increment sequence (Tested with MySQL)
+3. You can add @ManyToOne and @JoinColumn annotations on columns with foreign key (Tested with MySQL)
 
 ### JPA Mapping
 
