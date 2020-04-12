@@ -3,6 +3,7 @@
 ##### Version ${parent.version} - Published on ${timestamp}
 ###### New
 - GitHub [#11](https://github.com/Jukien/POJO-Generator/issues/11): Add compatibility with IntelliJ IDEA 2020.1 (Ultimate Edition)
+- GitHub [#12](https://github.com/Jukien/POJO-Generator/issues/12): Add possibility to see the differences if the file already exist
 
 ***
 

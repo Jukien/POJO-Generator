@@ -4,8 +4,15 @@ import com.intellij.database.model.DasColumn;
 import com.intellij.database.model.DasForeignKey;
 import com.intellij.database.psi.DbTable;
 import com.intellij.database.util.DasUtil;
+import com.intellij.diff.DiffContentFactory;
+import com.intellij.diff.DiffDialogHints;
+import com.intellij.diff.DiffManager;
+import com.intellij.diff.DiffRequestFactory;
+import com.intellij.diff.actions.impl.MutableDiffRequestChain;
+import com.intellij.diff.contents.DiffContent;
 import com.intellij.ide.highlighter.JavaClassFileType;
 import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationAction;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -19,6 +26,7 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiFileFactory;
 import com.intellij.psi.codeStyle.NameUtil;
 import com.intellij.psi.impl.file.PsiDirectoryFactory;
+import com.intellij.vcsUtil.VcsUtil;
 import com.twelvemonkeys.util.LinkedSet;
 import fr.jukien.intellij.plugins.ui.ConfigurableJPAMapping;
 import fr.jukien.intellij.plugins.ui.DBMSFamily;
@@ -178,7 +186,7 @@ public class Util {
     }
 
     /**
-     * Create file
+     * Create file or show the differences if the file already exist
      *
      * @param project
      * @param javaTextFile
@@ -195,6 +203,25 @@ public class Util {
             WriteCommandAction.runWriteCommandAction(project, r);
         } else {
             Notification notification = new Notification("POJO Generator", "POJO Generator", String.format("The file [%s] already exists", fileName), NotificationType.WARNING, null);
+            notification.addAction(NotificationAction.createSimple("Show Diff...", () -> {
+                notification.expire();
+
+                VirtualFile existingFile = psiDirectory.findFile(file.getName()).getVirtualFile();
+
+                DiffContentFactory contentFactory = DiffContentFactory.getInstance();
+                DiffRequestFactory requestFactory = DiffRequestFactory.getInstance();
+
+                DiffContent generatedFileContent = contentFactory.create(project, file.getText());
+                DiffContent existingFileContent = contentFactory.create(project, existingFile);
+
+                MutableDiffRequestChain chain = new MutableDiffRequestChain(generatedFileContent, existingFileContent);
+
+                chain.setWindowTitle(String.format("%s vs %s", "Generated file", VcsUtil.getFilePath(existingFile).getName()));
+                chain.setTitle1("Generated file");
+                chain.setTitle2(requestFactory.getContentTitle(existingFile));
+
+                DiffManager.getInstance().showDiff(project, chain, DiffDialogHints.DEFAULT);
+            }));
             Notifications.Bus.notify(notification, project);
         }
     }
