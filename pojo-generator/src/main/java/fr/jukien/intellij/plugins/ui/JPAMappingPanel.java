@@ -16,7 +16,7 @@ import java.util.UUID;
  * Created on 24/08/2019
  *
  * @author JDI
- * @version 2.0.0
+ * @version 2.2.0
  * @since 2.0.0
  */
 public class JPAMappingPanel {
@@ -53,7 +53,7 @@ public class JPAMappingPanel {
                     return true;//!WebBrowserManager.getInstance().isPredefinedBrowser(item);
                 }
             },
-            new TableModelEditor.EditableColumnInfo<ConfigurableJPAMapping, String>("SQL DataType") {
+            new TableModelEditor.EditableColumnInfo<ConfigurableJPAMapping, String>("SQL data type") {
                 @NotNull
                 @Override
                 public String valueOf(ConfigurableJPAMapping configurableJPAMapping) {
@@ -65,7 +65,7 @@ public class JPAMappingPanel {
                     item.setSqlDataType(value);
                 }
             },
-            new TableModelEditor.EditableColumnInfo<ConfigurableJPAMapping, String>("Java DataType") {
+            new TableModelEditor.EditableColumnInfo<ConfigurableJPAMapping, String>("Java data type") {
                 @NotNull
                 @Override
                 public String valueOf(ConfigurableJPAMapping configurableJPAMapping) {
@@ -77,7 +77,7 @@ public class JPAMappingPanel {
                     item.setJavaDataType(value);
                 }
             },
-            new TableModelEditor.EditableColumnInfo<ConfigurableJPAMapping, String>("Java columnDefinition") {
+            new TableModelEditor.EditableColumnInfo<ConfigurableJPAMapping, String>("Java columnDefinition attribute") {
                 @Nullable
                 @Override
                 public String valueOf(ConfigurableJPAMapping configurableJPAMapping) {
@@ -87,6 +87,23 @@ public class JPAMappingPanel {
                 @Override
                 public void setValue(ConfigurableJPAMapping item, String value) {
                     item.setJavaColumnDefinition(value);
+                }
+            },
+            new TableModelEditor.EditableColumnInfo<ConfigurableJPAMapping, Boolean>("Java length attribute") {
+                @Nullable
+                @Override
+                public Boolean valueOf(ConfigurableJPAMapping configurableJPAMapping) {
+                    return configurableJPAMapping.isLengthAttributeEnabled();
+                }
+
+                @Override
+                public Class<?> getColumnClass() {
+                    return Boolean.class;
+                }
+
+                @Override
+                public void setValue(ConfigurableJPAMapping configurableJPAMapping, Boolean value) {
+                    configurableJPAMapping.setLengthAttributeEnabled(value);
                 }
             }
     };
@@ -105,7 +122,7 @@ public class JPAMappingPanel {
             @Override
             public ConfigurableJPAMapping clone(@NotNull ConfigurableJPAMapping item, boolean forInPlaceEditing) {
                 return new ConfigurableJPAMapping(forInPlaceEditing ? item.getId() : UUID.randomUUID(),
-                        item.getFamily(), item.getSqlDataType(), item.getJavaDataType(), item.getJavaColumnDefinition());
+                        item.getFamily(), item.getSqlDataType(), item.getJavaDataType(), item.getJavaColumnDefinition(), item.isLengthAttributeEnabled());
             }
 
             @Override

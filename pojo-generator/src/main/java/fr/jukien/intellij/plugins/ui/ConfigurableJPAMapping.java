@@ -10,7 +10,7 @@ import java.util.UUID;
  * Created on 24/08/2019
  *
  * @author JDI
- * @version 2.0.0
+ * @version 2.2.0
  * @since 2.0.0
  */
 public class ConfigurableJPAMapping extends DBMS {
@@ -23,19 +23,23 @@ public class ConfigurableJPAMapping extends DBMS {
     private String javaDataType;
     @Nullable
     private String javaColumnDefinition;
+    @Nullable
+    private Boolean isLengthAttributeEnabled;
 
     ConfigurableJPAMapping() {
         this(UUID.randomUUID(), DBMSFamily.ORACLE);
     }
 
-    ConfigurableJPAMapping(@NotNull UUID id, @NotNull DBMSFamily family) {
-        this(id, family, family.getSqlDataType(), family.getJavaDataType(), family.getJavaColumnDefinition());
+    ConfigurableJPAMapping(@NotNull UUID id,
+                           @NotNull DBMSFamily family) {
+        this(id, family, family.getSqlDataType(), family.getJavaDataType(), family.getJavaColumnDefinition(), family.isLengthAttributeEnabled());
     }
 
-    ConfigurableJPAMapping(@NotNull UUID id, @NotNull DBMSFamily family,
+    ConfigurableJPAMapping(@NotNull UUID id,
+                           @NotNull DBMSFamily family,
                            @NotNull String sqlDataType,
                            @NotNull String javaDataType) {
-        this(id, family, sqlDataType, javaDataType, null);
+        this(id, family, sqlDataType, javaDataType, null, false);
     }
 
     ConfigurableJPAMapping(@NotNull UUID id,
@@ -43,45 +47,29 @@ public class ConfigurableJPAMapping extends DBMS {
                            @NotNull String sqlDataType,
                            @NotNull String javaDataType,
                            @Nullable String javaColumnDefinition) {
+        this(id, family, sqlDataType, javaDataType, javaColumnDefinition, false);
+    }
+
+    ConfigurableJPAMapping(@NotNull UUID id,
+                           @NotNull DBMSFamily family,
+                           @NotNull String sqlDataType,
+                           @NotNull String javaDataType,
+                           @Nullable Boolean isLengthAttributeEnabled) {
+        this(id, family, sqlDataType, javaDataType, null, isLengthAttributeEnabled);
+    }
+
+    ConfigurableJPAMapping(@NotNull UUID id,
+                           @NotNull DBMSFamily family,
+                           @NotNull String sqlDataType,
+                           @NotNull String javaDataType,
+                           @Nullable String javaColumnDefinition,
+                           @Nullable Boolean isLengthAttributeEnabled) {
         this.id = id;
         this.family = family;
         this.sqlDataType = sqlDataType;
         this.javaDataType = javaDataType;
         this.javaColumnDefinition = javaColumnDefinition;
-    }
-
-    public void setSqlDataType(@NotNull String value) {
-        sqlDataType = value;
-    }
-
-    public void setJavaDataType(@NotNull String value) {
-        javaDataType = value;
-    }
-
-    public void setJavaColumnDefinition(@Nullable String value) {
-        javaColumnDefinition = value;
-    }
-
-    public void setFamily(@NotNull DBMSFamily value) {
-        family = value;
-    }
-
-    @NotNull
-    @Override
-    public String getSqlDataType() {
-        return sqlDataType;
-    }
-
-    @NotNull
-    @Override
-    public String getJavaDataType() {
-        return javaDataType;
-    }
-
-    @Nullable
-    @Override
-    public String getJavaColumnDefinition() {
-        return javaColumnDefinition;
+        this.isLengthAttributeEnabled = isLengthAttributeEnabled;
     }
 
     @NotNull
@@ -96,9 +84,53 @@ public class ConfigurableJPAMapping extends DBMS {
         return family;
     }
 
+    public void setFamily(@NotNull DBMSFamily value) {
+        family = value;
+    }
+
     @NotNull
     @Override
     public Icon getIcon() {
         return family.getIcon();
+    }
+
+    @NotNull
+    @Override
+    public String getSqlDataType() {
+        return sqlDataType;
+    }
+
+    public void setSqlDataType(@NotNull String value) {
+        sqlDataType = value;
+    }
+
+    @NotNull
+    @Override
+    public String getJavaDataType() {
+        return javaDataType;
+    }
+
+    public void setJavaDataType(@NotNull String value) {
+        javaDataType = value;
+    }
+
+    @Nullable
+    @Override
+    public String getJavaColumnDefinition() {
+        return javaColumnDefinition;
+    }
+
+    public void setJavaColumnDefinition(@Nullable String value) {
+        javaColumnDefinition = value;
+    }
+
+    @Nullable
+    @Override
+    public Boolean isLengthAttributeEnabled() {
+        return isLengthAttributeEnabled;
+    }
+
+    public void setLengthAttributeEnabled(@Nullable Boolean lengthAttributeEnabled) {
+        isLengthAttributeEnabled = lengthAttributeEnabled;
     }
 }

@@ -10,7 +10,7 @@ import java.util.UUID;
  * Created on 24/08/2019
  *
  * @author JDI
- * @version 2.0.0
+ * @version 2.2.0
  * @since 2.0.0
  */
 public abstract class DBMS {
@@ -31,4 +31,7 @@ public abstract class DBMS {
 
     @Nullable
     public abstract String getJavaColumnDefinition();
+
+    @Nullable
+    public abstract Boolean isLengthAttributeEnabled();
 }

@@ -156,6 +156,7 @@ Below the default mapping table used by the plugin:<br/><br/>
     <ul>
         <li>[New] <a href="https://github.com/Jukien/POJO-Generator/issues/11">GitHub #11</a>: Add compatibility with IntelliJ IDEA 2020.1 (Ultimate Edition)</li>
         <li>[New] <a href="https://github.com/Jukien/POJO-Generator/issues/12">GitHub #12</a>: Add possibility to see the differences if the file already exist</li>
+        <li>[New] <a href="https://github.com/Jukien/POJO-Generator/issues/13">GitHub #13</a>: Add @Column's length attribute</li>
     </ul>
     ]]></change-notes>
 

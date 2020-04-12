@@ -30,7 +30,7 @@ import static fr.jukien.intellij.plugins.util.Util.*;
  * Created on 19/04/2019
  *
  * @author JDI
- * @version 2.1.0
+ * @version 2.2.0
  * @since 1.0.0
  */
 public class Entity extends AnAction {
@@ -109,11 +109,7 @@ public class Entity extends AnAction {
                             javaTextFile.append("    @JoinColumn(name = \"").append(field.getName().toUpperCase()).append("\"");
                         } else {
                             javaTextFile.append("    @Column(name = \"").append(field.getName().toUpperCase()).append("\"");
-                            if (null != field.getColumnDefinition()) {
-                                javaTextFile.append(", columnDefinition = \"");
-                                javaTextFile.append(field.getColumnDefinition());
-                                javaTextFile.append("\"");
-                            }
+                            addColumnAnnotationAttributes(javaTextFile, field);
                         }
                         javaTextFile.append(")").append("\n");
                     } else {
@@ -122,11 +118,7 @@ public class Entity extends AnAction {
                             javaTextFile.append("    @JoinColumn(name = \"").append(field.getName()).append("\"");
                         } else {
                             javaTextFile.append("    @Column(name = \"").append(field.getName()).append("\"");
-                            if (null != field.getColumnDefinition()) {
-                                javaTextFile.append(", columnDefinition = \"");
-                                javaTextFile.append(field.getColumnDefinition());
-                                javaTextFile.append("\"");
-                            }
+                            addColumnAnnotationAttributes(javaTextFile, field);
                         }
                         javaTextFile.append(")").append("\n");
                     }
@@ -139,6 +131,18 @@ public class Entity extends AnAction {
                 String fileName = String.format("%s%s", className, ".java");
                 createFile(project, javaTextFile, fileName);
             }
+        }
+    }
+
+    public void addColumnAnnotationAttributes(StringBuilder javaTextFile, Field field) {
+        if (null != field.getColumnDefinition()) {
+            javaTextFile.append(", columnDefinition = \"");
+            javaTextFile.append(field.getColumnDefinition());
+            javaTextFile.append("\"");
+        }
+        if (null != field.getLength()) {
+            javaTextFile.append(", length = ");
+            javaTextFile.append(field.getLength());
         }
     }
 

@@ -41,7 +41,7 @@ import java.util.Set;
  * Created on 25/04/2019
  *
  * @author JDI
- * @version 2.0.0
+ * @version 2.2.0
  * @since 1.0.0
  */
 public class Util {
@@ -65,10 +65,14 @@ public class Util {
             if (null != configurableJPAMapping) {
                 field.setJavaType(configurableJPAMapping.getJavaDataType());
                 field.setColumnDefinition(configurableJPAMapping.getJavaColumnDefinition());
+                if (null != configurableJPAMapping.isLengthAttributeEnabled() && configurableJPAMapping.isLengthAttributeEnabled()) {
+                    field.setLength(column.getDataType().size);
+                }
             } else {
                 field.setJavaType(null);
                 field.setColumnDefinition(null);
             }
+
             field.setPrimary(DasUtil.isPrimary(column));
             fields.add(field);
         }

@@ -11,30 +11,40 @@ import javax.swing.*;
  * Created on 24/08/2019
  *
  * @author JDI
- * @version 2.0.0
+ * @version 2.2.0
  * @since 2.0.0
  */
 public enum DBMSFamily implements Iconable {
-    MYSQL("MySQL", AllIcons.Providers.Mysql, "varchar", "String", null),
-    ORACLE("Oracle", AllIcons.Providers.Oracle, "VARCHAR2", "String", null),
-    POSTGRES("PostgreSQL", AllIcons.Providers.Postgresql, "varchar", "String", null);
+    MYSQL("MySQL", AllIcons.Providers.Mysql, "varchar", "String"),
+    ORACLE("Oracle", AllIcons.Providers.Oracle, "VARCHAR2", "String"),
+    POSTGRES("PostgreSQL", AllIcons.Providers.Postgresql, "varchar", "String");
 
     private final String name;
     private final Icon icon;
     private final String sqlDataType;
     private final String javaDataType;
     private final String javaColumnDefinition;
+    private final Boolean isLengthAttributeEnabled;
+
+    DBMSFamily(@NotNull String name,
+               @NotNull Icon icon,
+               @NotNull String sqlDataType,
+               @NotNull String javaDataType) {
+        this(name, icon, sqlDataType, javaDataType, null, false);
+    }
 
     DBMSFamily(@NotNull String name,
                @NotNull Icon icon,
                @NotNull String sqlDataType,
                @NotNull String javaDataType,
-               @Nullable String javaColumnDefinition) {
+               @Nullable String javaColumnDefinition,
+               @Nullable Boolean isLengthAttributeEnabled) {
         this.name = name;
         this.icon = icon;
         this.sqlDataType = sqlDataType;
         this.javaDataType = javaDataType;
         this.javaColumnDefinition = javaColumnDefinition;
+        this.isLengthAttributeEnabled = isLengthAttributeEnabled;
     }
 
     public String getName() {
@@ -65,5 +75,9 @@ public enum DBMSFamily implements Iconable {
 
     public String getJavaColumnDefinition() {
         return javaColumnDefinition;
+    }
+
+    public Boolean isLengthAttributeEnabled() {
+        return isLengthAttributeEnabled;
     }
 }
