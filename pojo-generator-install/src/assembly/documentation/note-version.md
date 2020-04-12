@@ -2,9 +2,15 @@
 
 ##### Version ${parent.version} - Published on ${timestamp}
 ###### New
+- GitHub [#11](https://github.com/Jukien/POJO-Generator/issues/11): Add compatibility with IntelliJ IDEA 2020.1 (Ultimate Edition)
+
+***
+
+##### Version 2.1.0 - Published on 06/01/2020
+###### New
 - GitHub [#1](https://github.com/Jukien/POJO-Generator/issues/1): Ask only once the path to store files when we select multiple tables for generation
 - GitHub [#6](https://github.com/Jukien/POJO-Generator/issues/6): Keep folders location for entities and DTOs files
-- GitHub [#8](https://github.com/Jukien/POJO-Generator/issues/8): Add @ManyToOne and @JoinColumn annotations on columns with foreign key
+- GitHub [#8](https://github.com/Jukien/POJO-Generator/issues/8): Add `@ManyToOne` and `@JoinColumn` annotations on columns with foreign key
 - GitHub [#9](https://github.com/Jukien/POJO-Generator/issues/9): Add the ability to customize the prefix and suffix of file names
 
 ###### Fixed
@@ -34,7 +40,7 @@
 ##### Version 1.1.0 - Published on 30/07/2019
 ###### New
 - \[Add] ORACLE datatype : CHAR (with columnDefinition)
-- \[Add] Possibility to add @GeneratedValue annotation over column which have auto increment sequence (Tested with MySQL)
+- \[Add] Possibility to add `@GeneratedValue` annotation over column which have auto increment sequence (Tested with MySQL)
 - \[Modification] Compatible from 2019.1
 
 ***

@@ -105,7 +105,7 @@
                 <artifactId>gradle-maven-plugin</artifactId>
                 <version>1.0.10</version>
                 <configuration>
-                    <gradleVersion>6.0.1</gradleVersion>
+                    <gradleVersion>6.3</gradleVersion>
                     <gradleProjectDirectory>${basedir}/target/gradle</gradleProjectDirectory>
                     <tasks>
                         <!-- this would effectively call "gradle doSomething" -->

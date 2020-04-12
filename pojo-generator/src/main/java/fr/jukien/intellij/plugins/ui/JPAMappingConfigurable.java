@@ -2,7 +2,6 @@ package fr.jukien.intellij.plugins.ui;
 
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.options.Configurable;
-import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
@@ -45,7 +44,7 @@ public class JPAMappingConfigurable implements Configurable {
     }
 
     @Override
-    public void apply() throws ConfigurationException {
+    public void apply() {
         jpaMappingSettings.setJpaMappings(jpaMappingPanel.getJpaMappingEditor().apply());
     }
 
