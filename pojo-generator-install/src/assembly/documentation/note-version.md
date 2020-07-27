@@ -2,8 +2,14 @@
 
 ##### Version ${parent.version} - Published on ${timestamp}
 ###### New
+- GitHub [#16](https://github.com/Jukien/POJO-Generator/issues/16): Add schema name on entity
+
+***
+
+##### Version 2.2.0 - Published on 12/04/2020
+###### New
 - GitHub [#11](https://github.com/Jukien/POJO-Generator/issues/11): Add compatibility with IntelliJ IDEA 2020.1 (Ultimate Edition)
-- GitHub [#12](https://github.com/Jukien/POJO-Generator/issues/12): Add possibility to see the differences if the file already exist
+- GitHub [#12](https://github.com/Jukien/POJO-Generator/issues/12): Add possibility to see the differences if the file already exists
 - GitHub [#13](https://github.com/Jukien/POJO-Generator/issues/13): Add `@Column`'s length attribute
 - GitHub [#14](https://github.com/Jukien/POJO-Generator/issues/14): Add new default mapping types
 

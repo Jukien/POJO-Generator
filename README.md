@@ -21,8 +21,8 @@ Example of the User DTO class:
 ![Settings](pojo-generator-install/src/site/resources/images/settings.png "Settings")
 
 1. You can capitalize table name and column name in annotation
-2. You can add @GeneratedValue annotations over column which have auto increment sequence (Tested with MySQL)
-3. You can add @ManyToOne and @JoinColumn annotations on columns with foreign key (Tested with MySQL)
+2. You can add `@GeneratedValue` annotations over column which have auto increment sequence (MySQL and PostgreSQL)
+3. You can add `@ManyToOne` and `@JoinColumn` annotations on columns with foreign key
 
 ### JPA Mapping
 

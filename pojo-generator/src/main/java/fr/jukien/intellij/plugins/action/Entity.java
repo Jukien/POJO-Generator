@@ -30,7 +30,7 @@ import static fr.jukien.intellij.plugins.util.Util.*;
  * Created on 19/04/2019
  *
  * @author JDI
- * @version 2.2.0
+ * @version 2.2.1
  * @since 1.0.0
  */
 public class Entity extends AnAction {
@@ -90,10 +90,14 @@ public class Entity extends AnAction {
                 javaTextFile.append("\n");
                 javaTextFile.append("@Entity").append("\n");
                 if (pojoGeneratorSettings.getCapitalize()) {
-                    javaTextFile.append("@Table(name = \"").append(tableInfo.getTableName().toUpperCase()).append("\")").append("\n");
+                    javaTextFile.append("@Table(name = \"").append(tableInfo.getTableName().toUpperCase());
                 } else {
-                    javaTextFile.append("@Table(name = \"").append(tableInfo.getTableName()).append("\")").append("\n");
+                    javaTextFile.append("@Table(name = \"").append(tableInfo.getTableName());
                 }
+                if (pojoGeneratorSettings.getWithSchemaAttribute()) {
+                    javaTextFile.append("\", schema = \"").append(tableInfo.getSchemaName());
+                }
+                javaTextFile.append("\")").append("\n");
                 javaTextFile.append("public class ").append(className).append(" {").append("\n");
 
                 for (Field field : fields) {
@@ -111,7 +115,6 @@ public class Entity extends AnAction {
                             javaTextFile.append("    @Column(name = \"").append(field.getName().toUpperCase()).append("\"");
                             addColumnAnnotationAttributes(javaTextFile, field);
                         }
-                        javaTextFile.append(")").append("\n");
                     } else {
                         if (pojoGeneratorSettings.getWithRelationshipAnnotations() && field.getForeignKey()) {
                             javaTextFile.append("    @ManyToOne").append("\n");
@@ -120,8 +123,8 @@ public class Entity extends AnAction {
                             javaTextFile.append("    @Column(name = \"").append(field.getName()).append("\"");
                             addColumnAnnotationAttributes(javaTextFile, field);
                         }
-                        javaTextFile.append(")").append("\n");
                     }
+                    javaTextFile.append(")").append("\n");
                     javaTextFile.append("    private ").append(field.getJavaType()).append(" ").append(javaName(field.getName(), false)).append(";").append("\n");
                     javaTextFile.append("\n");
                 }
@@ -129,7 +132,7 @@ public class Entity extends AnAction {
                 addGetterSetter(fields, javaTextFile);
 
                 String fileName = String.format("%s%s", className, ".java");
-                createFile(project, javaTextFile, fileName);
+                createFile(project, javaTextFile, fileName, pojoGeneratorSettings);
             }
         }
     }

@@ -12,8 +12,8 @@
         <ul>
             <li>There is no relationship between table</li>
             <li>JPA annotations are generates over attributes</li>
-            <li>@GeneratedValue annotations if sequence over column are auto generated (Tested with MySQL)</li>
-            <li>@ManyToOne and @JoinColumn annotations on columns with foreign key (Tested with MySQL)</li>
+            <li><code>@GeneratedValue</code> annotations if sequence over column are auto generated (MySQL and PostgreSQL)</li>
+            <li><code>@ManyToOne</code> and <code>@JoinColumn</code> annotations on columns with foreign key</li>
         </ul>
     </li>
     <li>a Data Transfert Object</li>
@@ -26,8 +26,8 @@ Below the default mapping table used by the plugin:<br/><br/>
     <thead>
     <tr>
         <th>DBMS</th>
-        <th>SQL DataType</th>
-        <th>Java DataType</th>
+        <th>SQL data type</th>
+        <th>Java data type</th>
         <th>JPA columnDefinition</th>
     </tr>
     </thead>
@@ -164,10 +164,7 @@ Below the default mapping table used by the plugin:<br/><br/>
 
     <change-notes><![CDATA[
     <ul>
-        <li>[New] <a href="https://github.com/Jukien/POJO-Generator/issues/11">GitHub #11</a>: Add compatibility with IntelliJ IDEA 2020.1 (Ultimate Edition)</li>
-        <li>[New] <a href="https://github.com/Jukien/POJO-Generator/issues/12">GitHub #12</a>: Add possibility to see the differences if the file already exist</li>
-        <li>[New] <a href="https://github.com/Jukien/POJO-Generator/issues/13">GitHub #13</a>: Add @Column's length attribute</li>
-        <li>[New] <a href="https://github.com/Jukien/POJO-Generator/issues/14">GitHub #14</a>: Add new default mapping types</li>
+        <li>[New] <a href="https://github.com/Jukien/POJO-Generator/issues/16">GitHub #16</a>: Add schema name on entity</li>
     </ul>
     ]]></change-notes>
 

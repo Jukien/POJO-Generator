@@ -42,16 +42,22 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Created on 24/04/2019
+ *
+ * @version 2.2.1
+ * @since 1.0.0
+ */
 public class TableInfo {
-
     private final DbTable tableElement;
-
-    private List<DasColumn> columns = new ArrayList<DasColumn>();
-
-    private List<String> primaryKeys = new ArrayList<String>();
+    private final String schemaName;
+    private final List<DasColumn> columns;
+    private final List<String> primaryKeys = new ArrayList<String>();
 
     public TableInfo(DbTable tableElement) {
         this.tableElement = tableElement;
+        this.schemaName = DasUtil.getSchema(tableElement);
+
         List<DasColumn> columns = new ArrayList<DasColumn>();
 
         JBIterable<? extends DasColumn> columnsIter = DasUtil.getColumns(tableElement);
@@ -62,14 +68,16 @@ public class TableInfo {
             if (DasUtil.isPrimary(dasColumn)) {
                 primaryKeys.add(dasColumn.getName());
             }
-
         }
-
         this.columns = columns;
     }
 
     public String getTableName() {
         return tableElement.getName();
+    }
+
+    public String getSchemaName() {
+        return schemaName;
     }
 
     public List<DasColumn> getColumns() {
