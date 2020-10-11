@@ -12,6 +12,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
+import com.twelvemonkeys.util.LinkedSet;
 import fr.jukien.intellij.plugins.ui.JPAMappingSettings;
 import fr.jukien.intellij.plugins.ui.POJOGeneratorSettings;
 import fr.jukien.intellij.plugins.util.Field;
@@ -22,7 +23,6 @@ import org.jetbrains.annotations.NotNull;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Set;
 
 import static fr.jukien.intellij.plugins.util.Util.*;
 
@@ -80,7 +80,7 @@ public class DTO extends AnAction {
                 }
 
                 TableInfo tableInfo = new TableInfo((DbTable) psiElement);
-                Set<Field> fields = getFields((DbTable) psiElement, jpaMappingSettings);
+                LinkedSet<Field> fields = getFields((DbTable) psiElement, jpaMappingSettings);
                 String className = String.format("%s%s%s", pojoGeneratorSettings.getPrefixDto(), javaName(tableInfo.getTableName(), true), pojoGeneratorSettings.getSuffixDto());
 
                 StringBuilder javaTextFile = new StringBuilder();

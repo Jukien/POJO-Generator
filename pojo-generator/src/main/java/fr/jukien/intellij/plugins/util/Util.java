@@ -45,7 +45,7 @@ import static fr.jukien.intellij.plugins.ui.DBMSFamily.POSTGRES;
  * Created on 25/04/2019
  *
  * @author JDI
- * @version 2.2.1
+ * @version 2.3.0
  * @since 1.0.0
  */
 public class Util {
@@ -99,10 +99,33 @@ public class Util {
         return fields;
     }
 
-    public static void addGetterSetter(Set<Field> fields, StringBuilder javaTextFile) {
-        for (Field field : fields) {
-            javaTextFile.append("\n");
+    public static void addConstructor(String className, LinkedSet<Field> fields, StringBuilder javaTextFile) {
+        StringBuilder fieldsToInitialize = new StringBuilder();
+        StringBuilder fieldsToInitializeAssignment = new StringBuilder();
+        javaTextFile.append("    public ").append(className).append("(");
 
+        int index = 0;
+        for (Field field : fields) {
+            fieldsToInitialize.append(field.getJavaType()).append(" ").append(javaName(field.getName(), false));
+
+            if (index < fields.size() - 1) {
+                fieldsToInitialize.append(", ");
+            }
+
+            fieldsToInitializeAssignment.append("        this.").append(javaName(field.getName(), false)).append(" = ").append(javaName(field.getName(), false)).append(";").append("\n");
+
+            index++;
+        }
+
+        javaTextFile.append(fieldsToInitialize).append(") {").append("\n");
+        javaTextFile.append(fieldsToInitializeAssignment);
+
+        javaTextFile.append("    }").append("\n");
+    }
+
+    public static void addGetterSetter(LinkedSet<Field> fields, StringBuilder javaTextFile) {
+        int index = 0;
+        for (Field field : fields) {
             javaTextFile.append("    public ").append(field.getJavaType()).append(" get").append(javaName(field.getName(), true)).append("() {").append("\n");
             javaTextFile.append("        return this.").append(javaName(field.getName(), false)).append(";").append("\n");
             javaTextFile.append("    }").append("\n");
@@ -112,9 +135,13 @@ public class Util {
             javaTextFile.append("    public void set").append(javaName(field.getName(), true)).append("(").append(field.getJavaType()).append(" ").append(javaName(field.getName(), false)).append(") {").append("\n");
             javaTextFile.append("        this.").append(javaName(field.getName(), false)).append(" = ").append(javaName(field.getName(), false)).append(";").append("\n");
             javaTextFile.append("    }").append("\n");
-        }
 
-        javaTextFile.append("}").append("\n");
+            if (index < fields.size() - 1) {
+                javaTextFile.append("\n");
+            }
+
+            index++;
+        }
     }
 
     public static String javaName(String str, Boolean capitalizeFirstLetter) {

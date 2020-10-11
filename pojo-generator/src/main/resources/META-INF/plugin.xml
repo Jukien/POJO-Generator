@@ -12,8 +12,9 @@
         <ul>
             <li>There is no relationship between table</li>
             <li>JPA annotations are generates over attributes</li>
-            <li><code>@GeneratedValue</code> annotations if sequence over column are auto generated (MySQL and PostgreSQL)</li>
+            <li><code>@GeneratedValue</code> annotation if sequence over column are auto generated (MySQL and PostgreSQL)</li>
             <li><code>@ManyToOne</code> and <code>@JoinColumn</code> annotations on columns with foreign key</li>
+            <li>Generate composite primary key with <code>@IdClass</code> or <code>@EmbeddedId</code> annotations</li>
         </ul>
     </li>
     <li>a Data Transfert Object</li>
@@ -164,7 +165,7 @@ Below the default mapping table used by the plugin:<br/><br/>
 
     <change-notes><![CDATA[
     <ul>
-        <li>[New] <a href="https://github.com/Jukien/POJO-Generator/issues/16">GitHub #16</a>: Add schema name on entity</li>
+        <li>[New] Possibility to generate composite primary key (<a href="https://github.com/Jukien/POJO-Generator/issues/17">GitHub #17</a>)</li>
     </ul>
     ]]></change-notes>
 

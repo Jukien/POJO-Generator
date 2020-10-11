@@ -12,6 +12,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
+import com.twelvemonkeys.util.LinkedSet;
 import fr.jukien.intellij.plugins.ui.JPAMappingSettings;
 import fr.jukien.intellij.plugins.ui.POJOGeneratorSettings;
 import fr.jukien.intellij.plugins.util.Field;
@@ -22,7 +23,6 @@ import org.jetbrains.annotations.NotNull;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Set;
 
 import static fr.jukien.intellij.plugins.util.Util.*;
 
@@ -30,7 +30,7 @@ import static fr.jukien.intellij.plugins.util.Util.*;
  * Created on 19/04/2019
  *
  * @author JDI
- * @version 2.2.1
+ * @version 2.3.0
  * @since 1.0.0
  */
 public class Entity extends AnAction {
@@ -80,7 +80,72 @@ public class Entity extends AnAction {
                 }
 
                 TableInfo tableInfo = new TableInfo((DbTable) psiElement);
-                Set<Field> fields = getFields((DbTable) psiElement, jpaMappingSettings);
+                LinkedSet<Field> fields = getFields((DbTable) psiElement, jpaMappingSettings);
+
+                String classNameComposite = null;
+                if (isCompositePrimaryKeyAvailable(pojoGeneratorSettings, tableInfo)) {
+                    classNameComposite = String.format("%s%s%s", pojoGeneratorSettings.getPrefixCompositePrimaryKey(), javaName(tableInfo.getTableName(), true), pojoGeneratorSettings.getSuffixCompositePrimaryKey());
+
+                    StringBuilder javaTextFile = new StringBuilder();
+                    javaTextFile.append("\n");
+
+                    if (pojoGeneratorSettings.getGenerateCompositePrimaryKeyWithEmbeddedIdAnnotation()) {
+                        javaTextFile.append("import javax.persistence.*;").append("\n");
+                    }
+                    javaTextFile.append("import java.io.Serializable;").append("\n");
+
+                    javaTextFile.append("\n");
+                    if (pojoGeneratorSettings.getGenerateCompositePrimaryKeyWithEmbeddedIdAnnotation()) {
+                        javaTextFile.append("@Embeddable").append("\n");
+                    }
+                    javaTextFile.append("public class ").append(classNameComposite).append(" implements Serializable {").append("\n");
+
+                    LinkedSet<Field> primaryFields = new LinkedSet<>();
+                    int index = 0;
+                    for (Field field : fields) {
+                        if (field.getPrimary()) {
+                            primaryFields.add(field);
+
+                            if (pojoGeneratorSettings.getGenerateCompositePrimaryKeyWithEmbeddedIdAnnotation()) {
+                                if (pojoGeneratorSettings.getCapitalize()) {
+                                    if (pojoGeneratorSettings.getWithRelationshipAnnotations() && field.getForeignKey()) {
+                                        javaTextFile.append("    @ManyToOne").append("\n");
+                                        javaTextFile.append("    @JoinColumn(name = \"").append(field.getName().toUpperCase()).append("\"");
+                                    } else {
+                                        javaTextFile.append("    @Column(name = \"").append(field.getName().toUpperCase()).append("\"");
+                                        addColumnAnnotationAttributes(javaTextFile, field);
+                                    }
+                                } else {
+                                    if (pojoGeneratorSettings.getWithRelationshipAnnotations() && field.getForeignKey()) {
+                                        javaTextFile.append("    @ManyToOne").append("\n");
+                                        javaTextFile.append("    @JoinColumn(name = \"").append(field.getName()).append("\"");
+                                    } else {
+                                        javaTextFile.append("    @Column(name = \"").append(field.getName()).append("\"");
+                                        addColumnAnnotationAttributes(javaTextFile, field);
+                                    }
+                                }
+                                javaTextFile.append(")").append("\n");
+                            }
+                            javaTextFile.append("    private ").append(field.getJavaType()).append(" ").append(javaName(field.getName(), false)).append(";").append("\n");
+                            if (pojoGeneratorSettings.getGenerateCompositePrimaryKeyWithEmbeddedIdAnnotation() && index < tableInfo.getPrimaryKeys().size() - 1) {
+                                javaTextFile.append("\n");
+                            }
+                            index++;
+                        }
+                    }
+
+                    javaTextFile.append("\n");
+                    addConstructor(classNameComposite, new LinkedSet<>(), javaTextFile);
+                    javaTextFile.append("\n");
+                    addConstructor(classNameComposite, primaryFields, javaTextFile);
+                    javaTextFile.append("\n");
+                    addGetterSetter(primaryFields, javaTextFile);
+                    javaTextFile.append("}").append("\n");
+
+                    String fileName = String.format("%s%s", classNameComposite, ".java");
+                    createFile(project, javaTextFile, fileName, pojoGeneratorSettings);
+                }
+
                 String className = String.format("%s%s%s", pojoGeneratorSettings.getPrefixEntity(), javaName(tableInfo.getTableName(), true), pojoGeneratorSettings.getSuffixEntity());
 
                 StringBuilder javaTextFile = new StringBuilder();
@@ -89,6 +154,26 @@ public class Entity extends AnAction {
 
                 javaTextFile.append("\n");
                 javaTextFile.append("@Entity").append("\n");
+                if (isCompositePrimaryKeyAvailable(pojoGeneratorSettings, tableInfo) && pojoGeneratorSettings.getGenerateCompositePrimaryKeyWithIdClassAnnotation()) {
+                    javaTextFile.append("@IdClass(").append(classNameComposite).append(".class)").append("\n");
+                }
+                if (isCompositePrimaryKeyAvailable(pojoGeneratorSettings, tableInfo) && pojoGeneratorSettings.getGenerateCompositePrimaryKeyWithEmbeddedIdAnnotation()) {
+                    LinkedSet<Field> fieldsWithoutPrimary = new LinkedSet<>();
+
+                    Field field = new Field();
+                    field.setEmbeddedId(true);
+                    field.setJavaType(classNameComposite);
+                    field.setName(classNameComposite);
+                    fieldsWithoutPrimary.add(field);
+
+                    for (Field field1 : fields) {
+                        if (!field1.getPrimary()) {
+                            fieldsWithoutPrimary.add(field1);
+                        }
+                    }
+                    fields.clear();
+                    fields.addAll(fieldsWithoutPrimary);
+                }
                 if (pojoGeneratorSettings.getCapitalize()) {
                     javaTextFile.append("@Table(name = \"").append(tableInfo.getTableName().toUpperCase());
                 } else {
@@ -101,35 +186,40 @@ public class Entity extends AnAction {
                 javaTextFile.append("public class ").append(className).append(" {").append("\n");
 
                 for (Field field : fields) {
-                    if (field.getPrimary()) {
-                        javaTextFile.append("    @Id").append("\n");
-                    }
-                    if (pojoGeneratorSettings.getAutoGenerated() && field.getAutoGenerated()) {
-                        javaTextFile.append("    @GeneratedValue(strategy = GenerationType.IDENTITY)").append("\n");
-                    }
-                    if (pojoGeneratorSettings.getCapitalize()) {
-                        if (pojoGeneratorSettings.getWithRelationshipAnnotations() && field.getForeignKey()) {
-                            javaTextFile.append("    @ManyToOne").append("\n");
-                            javaTextFile.append("    @JoinColumn(name = \"").append(field.getName().toUpperCase()).append("\"");
-                        } else {
-                            javaTextFile.append("    @Column(name = \"").append(field.getName().toUpperCase()).append("\"");
-                            addColumnAnnotationAttributes(javaTextFile, field);
-                        }
+                    if (field.getEmbeddedId()) {
+                        javaTextFile.append("    @EmbeddedId").append("\n");
                     } else {
-                        if (pojoGeneratorSettings.getWithRelationshipAnnotations() && field.getForeignKey()) {
-                            javaTextFile.append("    @ManyToOne").append("\n");
-                            javaTextFile.append("    @JoinColumn(name = \"").append(field.getName()).append("\"");
-                        } else {
-                            javaTextFile.append("    @Column(name = \"").append(field.getName()).append("\"");
-                            addColumnAnnotationAttributes(javaTextFile, field);
+                        if (field.getPrimary()) {
+                            javaTextFile.append("    @Id").append("\n");
                         }
+                        if (pojoGeneratorSettings.getAutoGenerated() && field.getAutoGenerated()) {
+                            javaTextFile.append("    @GeneratedValue(strategy = GenerationType.IDENTITY)").append("\n");
+                        }
+                        if (pojoGeneratorSettings.getCapitalize()) {
+                            if (pojoGeneratorSettings.getWithRelationshipAnnotations() && field.getForeignKey()) {
+                                javaTextFile.append("    @ManyToOne").append("\n");
+                                javaTextFile.append("    @JoinColumn(name = \"").append(field.getName().toUpperCase()).append("\"");
+                            } else {
+                                javaTextFile.append("    @Column(name = \"").append(field.getName().toUpperCase()).append("\"");
+                                addColumnAnnotationAttributes(javaTextFile, field);
+                            }
+                        } else {
+                            if (pojoGeneratorSettings.getWithRelationshipAnnotations() && field.getForeignKey()) {
+                                javaTextFile.append("    @ManyToOne").append("\n");
+                                javaTextFile.append("    @JoinColumn(name = \"").append(field.getName()).append("\"");
+                            } else {
+                                javaTextFile.append("    @Column(name = \"").append(field.getName()).append("\"");
+                                addColumnAnnotationAttributes(javaTextFile, field);
+                            }
+                        }
+                        javaTextFile.append(")").append("\n");
                     }
-                    javaTextFile.append(")").append("\n");
                     javaTextFile.append("    private ").append(field.getJavaType()).append(" ").append(javaName(field.getName(), false)).append(";").append("\n");
                     javaTextFile.append("\n");
                 }
 
                 addGetterSetter(fields, javaTextFile);
+                javaTextFile.append("}").append("\n");
 
                 String fileName = String.format("%s%s", className, ".java");
                 createFile(project, javaTextFile, fileName, pojoGeneratorSettings);
@@ -137,7 +227,7 @@ public class Entity extends AnAction {
         }
     }
 
-    public void addColumnAnnotationAttributes(StringBuilder javaTextFile, Field field) {
+    private void addColumnAnnotationAttributes(StringBuilder javaTextFile, Field field) {
         if (null != field.getColumnDefinition()) {
             javaTextFile.append(", columnDefinition = \"");
             javaTextFile.append(field.getColumnDefinition());
@@ -147,6 +237,10 @@ public class Entity extends AnAction {
             javaTextFile.append(", length = ");
             javaTextFile.append(field.getLength());
         }
+    }
+
+    private boolean isCompositePrimaryKeyAvailable(POJOGeneratorSettings pojoGeneratorSettings, TableInfo tableInfo) {
+        return pojoGeneratorSettings.getGenerateCompositePrimaryKey() && tableInfo.getPrimaryKeys().size() > 1;
     }
 
     @Override

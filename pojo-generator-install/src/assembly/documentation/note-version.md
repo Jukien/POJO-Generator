@@ -2,6 +2,12 @@
 
 ##### Version ${parent.version} - Published on ${timestamp}
 ###### New
+- Possibility to generate composite primary key (GitHub [#17](https://github.com/Jukien/POJO-Generator/issues/17))
+
+***
+
+##### Version 2.2.1 - Published on 27/07/2020
+###### New
 - GitHub [#16](https://github.com/Jukien/POJO-Generator/issues/16): Add schema name on entity
 
 ***
