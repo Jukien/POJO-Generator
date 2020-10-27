@@ -21,7 +21,7 @@ Example of the User DTO class:
 ![Settings](pojo-generator-install/src/site/resources/images/settings.png "Settings")
 
 1. You can capitalize table name and column name in annotation
-2. You can add `@GeneratedValue` annotation over column which have auto increment sequence (MySQL and PostgreSQL)
+2. You can add `@GeneratedValue` annotation over column which have auto increment sequence (H2, MySQL and PostgreSQL)
 3. You can add `@ManyToOne` and `@JoinColumn` annotations on columns with foreign key
 4. You can generate composite primary key with `@IdClass` or `@EmbeddedId` annotations
 
