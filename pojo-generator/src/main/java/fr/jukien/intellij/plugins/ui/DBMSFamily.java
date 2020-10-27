@@ -11,7 +11,7 @@ import javax.swing.*;
  * Created on 24/08/2019
  *
  * @author JDI
- * @version 2.2.0
+ * @version 2.3.0
  * @since 2.0.0
  */
 public enum DBMSFamily implements Iconable {

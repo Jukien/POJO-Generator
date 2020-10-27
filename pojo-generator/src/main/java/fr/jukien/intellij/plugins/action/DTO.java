@@ -30,7 +30,7 @@ import static fr.jukien.intellij.plugins.util.Util.*;
  * Created on 25/04/2019
  *
  * @author JDI
- * @version 2.2.1
+ * @version 2.3.0
  * @since 1.0.0
  */
 public class DTO extends AnAction {
