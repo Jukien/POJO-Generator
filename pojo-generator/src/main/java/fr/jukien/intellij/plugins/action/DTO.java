@@ -94,7 +94,9 @@ public class DTO extends AnAction {
                     javaTextFile.append("    private ").append(field.getJavaType()).append(" ").append(javaName(field.getName(), false)).append(";").append("\n");
                 }
 
+                javaTextFile.append("\n");
                 addGetterSetter(fields, javaTextFile);
+                javaTextFile.append("}").append("\n");
 
                 String fileName = String.format("%s%s", className, ".java");
                 createFile(project, javaTextFile, fileName, pojoGeneratorSettings);

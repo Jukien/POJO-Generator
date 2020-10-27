@@ -12,7 +12,7 @@
         <ul>
             <li>There is no relationship between table</li>
             <li>JPA annotations are generates over attributes</li>
-            <li><code>@GeneratedValue</code> annotation if sequence over column are auto generated (MySQL and PostgreSQL)</li>
+            <li><code>@GeneratedValue</code> annotation if sequence over column are auto generated (H2, MySQL and PostgreSQL)</li>
             <li><code>@ManyToOne</code> and <code>@JoinColumn</code> annotations on columns with foreign key</li>
             <li>Generate composite primary key with <code>@IdClass</code> or <code>@EmbeddedId</code> annotations</li>
         </ul>
@@ -20,7 +20,7 @@
     <li>a Data Transfert Object</li>
 </ul>
 <br/>
-Works with <b>MySQL</b>, <b>Oracle</b> & <b>PostgreSQL</b>.
+Works with <b>H2</b>, <b>MySQL</b>, <b>Oracle</b> & <b>PostgreSQL</b>.
 <br/><br/>
 Below the default mapping table used by the plugin:<br/><br/>
 <table>
@@ -33,6 +33,21 @@ Below the default mapping table used by the plugin:<br/><br/>
     </tr>
     </thead>
     <tbody>
+    <tr>
+        <td>H2</td>
+        <td>BIGINT</td>
+        <td>Long</td>
+    </tr>
+    <tr>
+        <td>H2</td>
+        <td>DATE</td>
+        <td>java.sql.Date</td>
+    </tr>
+    <tr>
+        <td>H2</td>
+        <td>VARCHAR</td>
+        <td>String</td>
+    </tr>
     <tr>
         <td>MySQL</td>
         <td>bigint</td>
@@ -165,7 +180,8 @@ Below the default mapping table used by the plugin:<br/><br/>
 
     <change-notes><![CDATA[
     <ul>
-        <li>[New] Possibility to generate composite primary key (<a href="https://github.com/Jukien/POJO-Generator/issues/17">GitHub #17</a>)</li>
+        <li>[New] Possibility to generate composite primary key (GitHub <a href="https://github.com/Jukien/POJO-Generator/issues/17">#17</a>)</li>
+        <li>[New] H2 Database support (GitHub <a href="https://github.com/Jukien/POJO-Generator/issues/18">#18</a>)</li>
     </ul>
     ]]></change-notes>
 

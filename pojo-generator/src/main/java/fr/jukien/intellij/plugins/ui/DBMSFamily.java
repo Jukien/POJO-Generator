@@ -15,6 +15,7 @@ import javax.swing.*;
  * @since 2.0.0
  */
 public enum DBMSFamily implements Iconable {
+    H2("H2", AllIcons.Providers.H2, "VARCHAR", "String"),
     MYSQL("MySQL", AllIcons.Providers.Mysql, "varchar", "String"),
     ORACLE("Oracle", AllIcons.Providers.Oracle, "VARCHAR2", "String"),
     POSTGRES("PostgreSQL", AllIcons.Providers.Postgresql, "varchar", "String");

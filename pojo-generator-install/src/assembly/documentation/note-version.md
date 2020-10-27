@@ -3,6 +3,7 @@
 ##### Version ${parent.version} - Published on ${timestamp}
 ###### New
 - Possibility to generate composite primary key (GitHub [#17](https://github.com/Jukien/POJO-Generator/issues/17))
+- H2 Database support (GitHub [#18](https://github.com/Jukien/POJO-Generator/issues/18))
 
 ***
 

@@ -29,6 +29,9 @@ public class JPAMappingSettings implements PersistentStateComponent<JPAMappingSe
 
     public static List<ConfigurableJPAMapping> getPredefinedJPAMappings() {
         return Arrays.asList(
+                new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.H2, "BIGINT", "Long"),
+                new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.H2, "DATE", "java.sql.Date"),
+                new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.H2, "VARCHAR", "String"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "bigint", "Long"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "bit", "Boolean"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "date", "java.sql.Date"),
