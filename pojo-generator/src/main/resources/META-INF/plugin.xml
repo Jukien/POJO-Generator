@@ -100,6 +100,11 @@ Below the default mapping table used by the plugin:<br/><br/>
     </tr>
     <tr>
         <td>MySQL</td>
+        <td>smallint</td>
+        <td>Integer</td>
+    </tr>
+    <tr>
+        <td>MySQL</td>
         <td>text</td>
         <td>String</td>
     </tr>
@@ -180,8 +185,7 @@ Below the default mapping table used by the plugin:<br/><br/>
 
     <change-notes><![CDATA[
     <ul>
-        <li>[New] Possibility to generate composite primary key (GitHub <a href="https://github.com/Jukien/POJO-Generator/issues/17">#17</a>)</li>
-        <li>[New] H2 Database support (GitHub <a href="https://github.com/Jukien/POJO-Generator/issues/18">#18</a>)</li>
+        <li>[Fixed] Compatibility with JBR 8 (GitHub <a href="https://github.com/Jukien/POJO-Generator/issues/22">#22</a>)</li>
     </ul>
     ]]></change-notes>
 

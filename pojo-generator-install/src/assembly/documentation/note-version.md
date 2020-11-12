@@ -1,6 +1,12 @@
 #### Changelog
 
 ##### Version ${parent.version} - Published on ${timestamp}
+###### Fixed
+- Compatibility with JBR 8 (GitHub [#22](https://github.com/Jukien/POJO-Generator/issues/22))
+
+***
+
+##### Version 2.3.0 - Published on 27/10/2020
 ###### New
 - Possibility to generate composite primary key (GitHub [#17](https://github.com/Jukien/POJO-Generator/issues/17))
 - H2 Database support (GitHub [#18](https://github.com/Jukien/POJO-Generator/issues/18))

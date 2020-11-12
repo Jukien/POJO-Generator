@@ -42,6 +42,7 @@ public class JPAMappingSettings implements PersistentStateComponent<JPAMappingSe
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "float", "Float"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "int", "Integer"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "json", "String"),
+                new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "smallint", "Integer"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "text", "String"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "timestamp", "java.sql.Timestamp"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "tinyint", "java.lang.Byte"),
