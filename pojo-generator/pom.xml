@@ -96,6 +96,7 @@
                             <executable>./gradlew</executable>
                             <arguments>
                                 <argument>clean</argument>
+                                <argument>-Dorg.gradle.java.home=${java.home}</argument>
                                 <argument>--project-dir</argument>
                                 <argument>/${targetGradle}</argument>
                             </arguments>
@@ -111,6 +112,7 @@
                             <executable>./gradlew</executable>
                             <arguments>
                                 <argument>buildPlugin</argument>
+                                <argument>-Dorg.gradle.java.home=${java.home}</argument>
                                 <argument>--project-dir</argument>
                                 <argument>/${targetGradle}</argument>
                             </arguments>
