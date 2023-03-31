@@ -16,7 +16,7 @@ import java.util.UUID;
  * Created on 24/08/2019
  *
  * @author JDI
- * @version 2.2.0
+ * @version 2.4.0
  * @since 2.0.0
  */
 public class JPAMappingPanel {
@@ -126,11 +126,8 @@ public class JPAMappingPanel {
             }
 
             @Override
-            public void edit(@NotNull ConfigurableJPAMapping browser, @NotNull Function<ConfigurableJPAMapping, ConfigurableJPAMapping> mutator, boolean isAdd) {
-                /*BrowserSpecificSettings settings = cloneSettings(browser);
-                if (settings != null && ShowSettingsUtil.getInstance().editConfigurable(browsersTable, settings.createConfigurable())) {
-                    mutator.fun(browser).setSpecificSettings(settings);
-                }*/
+            public void edit(@NotNull ConfigurableJPAMapping item, @NotNull Function<? super ConfigurableJPAMapping, ? extends ConfigurableJPAMapping> mutator, boolean isAdd) {
+
             }
 
             @Override

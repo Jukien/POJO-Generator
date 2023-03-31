@@ -16,7 +16,7 @@ import java.util.UUID;
  * Created on 24/08/2019
  *
  * @author JDI
- * @version 2.3.0
+ * @version 2.4.0
  * @since 2.0.0
  */
 @State(
@@ -30,12 +30,12 @@ public class JPAMappingSettings implements PersistentStateComponent<JPAMappingSe
     public static List<ConfigurableJPAMapping> getPredefinedJPAMappings() {
         return Arrays.asList(
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.H2, "BIGINT", "Long"),
-                new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.H2, "DATE", "java.sql.Date"),
+                new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.H2, "DATE", "LocalDate"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.H2, "VARCHAR", "String"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "bigint", "Long"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "bit", "Boolean"),
-                new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "date", "java.sql.Date"),
-                new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "datetime", "java.sql.Timestamp"),
+                new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "date", "LocalDate"),
+                new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "datetime", "LocalDateTime"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "decimal", "BigDecimal"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "double", "Double"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "enum", "String"),
@@ -44,18 +44,18 @@ public class JPAMappingSettings implements PersistentStateComponent<JPAMappingSe
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "json", "String"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "smallint", "Integer"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "text", "String"),
-                new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "timestamp", "java.sql.Timestamp"),
+                new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "timestamp", "LocalDateTime"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "tinyint", "java.lang.Byte"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.MYSQL, "varchar", "String"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.ORACLE, "CHAR", "String", "CHAR"),
-                new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.ORACLE, "DATE", "java.sql.Date"),
+                new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.ORACLE, "DATE", "LocalDate"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.ORACLE, "FLOAT", "Float"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.ORACLE, "NUMBER", "Long"),
-                new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.ORACLE, "TIMESTAMP", "java.sql.Timestamp"),
+                new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.ORACLE, "TIMESTAMP", "LocalDateTime"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.ORACLE, "VARCHAR2", "String"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.POSTGRES, "bigint", "Long"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.POSTGRES, "boolean", "Boolean"),
-                new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.POSTGRES, "date", "java.sql.Date"),
+                new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.POSTGRES, "date", "LocalDate"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.POSTGRES, "integer", "Long"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.POSTGRES, "varchar", "String")
         );

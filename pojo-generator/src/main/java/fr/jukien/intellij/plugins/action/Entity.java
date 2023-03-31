@@ -4,7 +4,6 @@ import com.intellij.database.psi.DbTable;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
@@ -12,7 +11,6 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
-import com.twelvemonkeys.util.LinkedSet;
 import fr.jukien.intellij.plugins.ui.JPAMappingSettings;
 import fr.jukien.intellij.plugins.ui.POJOGeneratorSettings;
 import fr.jukien.intellij.plugins.util.Field;
@@ -23,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedHashSet;
 
 import static fr.jukien.intellij.plugins.util.Util.*;
 
@@ -30,7 +29,7 @@ import static fr.jukien.intellij.plugins.util.Util.*;
  * Created on 19/04/2019
  *
  * @author JDI
- * @version 2.3.0
+ * @version 2.4.0
  * @since 1.0.0
  */
 public class Entity extends AnAction {
@@ -43,8 +42,8 @@ public class Entity extends AnAction {
             return;
         }
 
-        final POJOGeneratorSettings pojoGeneratorSettings = ServiceManager.getService(project, POJOGeneratorSettings.class);
-        final JPAMappingSettings jpaMappingSettings = ServiceManager.getService(project, JPAMappingSettings.class);
+        final POJOGeneratorSettings pojoGeneratorSettings = project.getService(POJOGeneratorSettings.class);
+        final JPAMappingSettings jpaMappingSettings = project.getService(JPAMappingSettings.class);
 
         PsiElement[] psiElements = anActionEvent.getData(LangDataKeys.PSI_ELEMENT_ARRAY);
         if (psiElements == null || psiElements.length == 0) {
@@ -80,7 +79,7 @@ public class Entity extends AnAction {
                 }
 
                 TableInfo tableInfo = new TableInfo((DbTable) psiElement);
-                LinkedSet<Field> fields = getFields((DbTable) psiElement, jpaMappingSettings);
+                LinkedHashSet<Field> fields = getFields((DbTable) psiElement, jpaMappingSettings);
 
                 String classNameComposite = null;
                 if (isCompositePrimaryKeyAvailable(pojoGeneratorSettings, tableInfo)) {
@@ -100,7 +99,7 @@ public class Entity extends AnAction {
                     }
                     javaTextFile.append("public class ").append(classNameComposite).append(" implements Serializable {").append("\n");
 
-                    LinkedSet<Field> primaryFields = new LinkedSet<>();
+                    LinkedHashSet<Field> primaryFields = new LinkedHashSet<>();
                     int index = 0;
                     for (Field field : fields) {
                         if (field.getPrimary()) {
@@ -135,7 +134,7 @@ public class Entity extends AnAction {
                     }
 
                     javaTextFile.append("\n");
-                    addConstructor(classNameComposite, new LinkedSet<>(), javaTextFile);
+                    addConstructor(classNameComposite, new LinkedHashSet<>(), javaTextFile);
                     javaTextFile.append("\n");
                     addConstructor(classNameComposite, primaryFields, javaTextFile);
                     javaTextFile.append("\n");
@@ -158,7 +157,7 @@ public class Entity extends AnAction {
                     javaTextFile.append("@IdClass(").append(classNameComposite).append(".class)").append("\n");
                 }
                 if (isCompositePrimaryKeyAvailable(pojoGeneratorSettings, tableInfo) && pojoGeneratorSettings.getGenerateCompositePrimaryKeyWithEmbeddedIdAnnotation()) {
-                    LinkedSet<Field> fieldsWithoutPrimary = new LinkedSet<>();
+                    LinkedHashSet<Field> fieldsWithoutPrimary = new LinkedHashSet<>();
 
                     Field field = new Field();
                     field.setEmbeddedId(true);

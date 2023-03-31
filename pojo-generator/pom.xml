@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -13,32 +14,15 @@
 
     <name>POJO Generator :: Plugin</name>
 
+    <properties>
+        <targetGradle>target/gradle</targetGradle>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.0.0-M3</version>
-                <executions>
-                    <execution>
-                        <id>enforce-java</id>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <requireJavaVersion>
-                                    <!-- Requirement for gradle-maven-plugin -->
-                                    <version>[1.8, 1.9)</version>
-                                </requireJavaVersion>
-                            </rules>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.3.1</version>
                 <executions>
                     <execution>
                         <id>copy-gradle-project</id>
@@ -58,7 +42,7 @@
                                     </includes>
                                 </resource>
                             </resources>
-                            <outputDirectory>${basedir}/target/gradle</outputDirectory>
+                            <outputDirectory>${basedir}/${targetGradle}</outputDirectory>
                         </configuration>
                     </execution>
                     <execution>
@@ -78,7 +62,7 @@
                                     <filtering>true</filtering>
                                 </resource>
                             </resources>
-                            <outputDirectory>${basedir}/target/gradle</outputDirectory>
+                            <outputDirectory>${basedir}/${targetGradle}</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
@@ -86,7 +70,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.11.0</version>
                 <executions>
                     <execution>
                         <id>default-compile</id>
@@ -101,25 +85,38 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>codes.rafael.gradlemavenplugin</groupId>
-                <artifactId>gradle-maven-plugin</artifactId>
-                <version>1.0.10</version>
-                <configuration>
-                    <gradleVersion>6.7</gradleVersion>
-                    <gradleProjectDirectory>${basedir}/target/gradle</gradleProjectDirectory>
-                    <tasks>
-                        <!-- this would effectively call "gradle doSomething" -->
-                        <task>clean</task>
-                        <task>buildPlugin</task>
-                    </tasks>
-                </configuration>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
                 <executions>
                     <execution>
-                        <!-- You can bind this to any phase you like -->
+                        <id>gradle-clean</id>
                         <phase>install</phase>
+                        <configuration>
+                            <executable>./gradlew</executable>
+                            <arguments>
+                                <argument>clean</argument>
+                                <argument>--project-dir</argument>
+                                <argument>/${targetGradle}</argument>
+                            </arguments>
+                        </configuration>
                         <goals>
-                            <!-- goal must be "invoke" -->
-                            <goal>invoke</goal>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>gradle-buildPlugin</id>
+                        <phase>install</phase>
+                        <configuration>
+                            <executable>./gradlew</executable>
+                            <arguments>
+                                <argument>buildPlugin</argument>
+                                <argument>--project-dir</argument>
+                                <argument>/${targetGradle}</argument>
+                            </arguments>
+                        </configuration>
+                        <goals>
+                            <goal>exec</goal>
                         </goals>
                     </execution>
                 </executions>

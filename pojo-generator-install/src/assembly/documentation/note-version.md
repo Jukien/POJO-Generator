@@ -2,6 +2,12 @@
 
 ##### Version ${parent.version} - Published on ${timestamp}
 ###### Fixed
+- NoClassDefFoundError with IDEA 2023.1 (GitHub [#26](https://github.com/Jukien/POJO-Generator/issues/26))
+
+***
+
+##### Version 2.3.1 - Published on 12/11/2020
+###### Fixed
 - Compatibility with JBR 8 (GitHub [#22](https://github.com/Jukien/POJO-Generator/issues/22))
 
 ***

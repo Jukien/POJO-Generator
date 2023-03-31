@@ -41,7 +41,7 @@ Below the default mapping table used by the plugin:<br/><br/>
     <tr>
         <td>H2</td>
         <td>DATE</td>
-        <td>java.sql.Date</td>
+        <td>LocalDate</td>
     </tr>
     <tr>
         <td>H2</td>
@@ -61,12 +61,12 @@ Below the default mapping table used by the plugin:<br/><br/>
     <tr>
         <td>MySQL</td>
         <td>date</td>
-        <td>java.sql.Date</td>
+        <td>LocalDate</td>
     </tr>
     <tr>
         <td>MySQL</td>
         <td>datetime</td>
-        <td>java.sql.Timestamp</td>
+        <td>LocalDateTime</td>
     </tr>
     <tr>
         <td>MySQL</td>
@@ -111,7 +111,7 @@ Below the default mapping table used by the plugin:<br/><br/>
     <tr>
         <td>MySQL</td>
         <td>timestamp</td>
-        <td>java.sql.Timestamp</td>
+        <td>LocalDateTime</td>
     </tr>
     <tr>
         <td>MySQL</td>
@@ -132,7 +132,7 @@ Below the default mapping table used by the plugin:<br/><br/>
     <tr>
         <td>Oracle</td>
         <td>DATE</td>
-        <td>java.sql.Date</td>
+        <td>LocalDate</td>
     </tr>
     <tr>
         <td>Oracle</td>
@@ -147,7 +147,7 @@ Below the default mapping table used by the plugin:<br/><br/>
     <tr>
         <td>Oracle</td>
         <td>TIMESTAMP</td>
-        <td>java.sql.Timestamp</td>
+        <td>LocalDateTime</td>
     </tr>
     <tr>
         <td>Oracle</td>
@@ -167,7 +167,7 @@ Below the default mapping table used by the plugin:<br/><br/>
     <tr>
         <td>PostgreSQL</td>
         <td>date</td>
-        <td>java.sql.Date</td>
+        <td>LocalDate</td>
     </tr>
     <tr>
         <td>PostgreSQL</td>
@@ -185,7 +185,7 @@ Below the default mapping table used by the plugin:<br/><br/>
 
     <change-notes><![CDATA[
     <ul>
-        <li>[Fixed] Compatibility with JBR 8 (GitHub <a href="https://github.com/Jukien/POJO-Generator/issues/22">#22</a>)</li>
+        <li>[Fixed] NoClassDefFoundError with IDEA 2023.1 (GitHub <a href="https://github.com/Jukien/POJO-Generator/issues/26">#26</a>)</li>
     </ul>
     ]]></change-notes>
 

@@ -1,6 +1,5 @@
 package fr.jukien.intellij.plugins.ui;
 
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.Nls;
@@ -12,7 +11,7 @@ import javax.swing.*;
  * Created on 24/04/2019
  *
  * @author JDI
- * @version 2.3.0
+ * @version 2.4.0
  * @since 1.0.0
  */
 public class POJOGeneratorConfigurable implements Configurable {
@@ -20,7 +19,7 @@ public class POJOGeneratorConfigurable implements Configurable {
     private POJOGeneratorPanel pojoGeneratorPanel;
 
     public POJOGeneratorConfigurable(Project project) {
-        this.pojoGeneratorSettings = ServiceManager.getService(project, POJOGeneratorSettings.class);
+        this.pojoGeneratorSettings = project.getService(POJOGeneratorSettings.class);
     }
 
     @Nls(capitalization = Nls.Capitalization.Title)

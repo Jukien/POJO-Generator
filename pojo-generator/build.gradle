@@ -1,29 +1,29 @@
 plugins {
     id 'java'
-    id 'org.jetbrains.intellij' version '0.6.3'
+    id 'org.jetbrains.intellij' version '1.13.3'
 }
 
 group '${project.groupId}'
 version '${project.version}'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 17
 
 repositories {
     mavenCentral()
 }
 
-dependencies {
+/*dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-}
+}*/
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version '2020.2'
-    type 'IU'
+    version = '2023.1'
+    type = 'IU'
     plugins = ['java', 'DatabaseTools']
-    updateSinceUntilBuild false
+    updateSinceUntilBuild = false
 }
 
 patchPluginXml {
-    sinceBuild '191'
+    sinceBuild = '231'
 }

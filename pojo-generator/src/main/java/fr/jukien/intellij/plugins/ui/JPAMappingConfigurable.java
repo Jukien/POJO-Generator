@@ -1,6 +1,5 @@
 package fr.jukien.intellij.plugins.ui;
 
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.Nls;
@@ -12,7 +11,7 @@ import javax.swing.*;
  * Created on 24/08/2019
  *
  * @author JDI
- * @version 2.0.0
+ * @version 2.4.0
  * @since 2.0.0
  */
 public class JPAMappingConfigurable implements Configurable {
@@ -20,7 +19,7 @@ public class JPAMappingConfigurable implements Configurable {
     private JPAMappingPanel jpaMappingPanel;
 
     public JPAMappingConfigurable(Project project) {
-        this.jpaMappingSettings = ServiceManager.getService(project, JPAMappingSettings.class);
+        this.jpaMappingSettings = project.getService(JPAMappingSettings.class);
     }
 
     @Nls(capitalization = Nls.Capitalization.Title)
