@@ -12,7 +12,7 @@
         <ul>
             <li>There is no relationship between table</li>
             <li>JPA annotations are generates over attributes</li>
-            <li><code>@GeneratedValue</code> annotation if sequence over column are auto generated (H2, MySQL and PostgreSQL)</li>
+            <li><code>@GeneratedValue</code> annotation if sequence over column are auto generated (H2, Microsoft SQL Server, MySQL and PostgreSQL)</li>
             <li><code>@ManyToOne</code> and <code>@JoinColumn</code> annotations on columns with foreign key</li>
             <li>Generate composite primary key with <code>@IdClass</code> or <code>@EmbeddedId</code> annotations</li>
         </ul>
@@ -20,7 +20,7 @@
     <li>a Data Transfert Object</li>
 </ul>
 <br/>
-Works with <b>H2</b>, <b>MySQL</b>, <b>Oracle</b> & <b>PostgreSQL</b>.
+Works with <b>H2</b>, <b>Microsoft SQL Server</b>, <b>MySQL</b>, <b>Oracle</b> & <b>PostgreSQL</b>.
 <br/><br/>
 Below the default mapping table used by the plugin:<br/><br/>
 <table>
@@ -46,6 +46,46 @@ Below the default mapping table used by the plugin:<br/><br/>
     <tr>
         <td>H2</td>
         <td>VARCHAR</td>
+        <td>String</td>
+    </tr>
+    <tr>
+        <td>Microsoft SQL Server</td>
+        <td>bigint</td>
+        <td>Long</td>
+    </tr>
+    <tr>
+        <td>Microsoft SQL Server</td>
+        <td>bit</td>
+        <td>Boolean</td>
+    </tr>
+    <tr>
+        <td>Microsoft SQL Server</td>
+        <td>datetime</td>
+        <td>LocalDateTime</td>
+    </tr>
+    <tr>
+        <td>Microsoft SQL Server</td>
+        <td>datetime2</td>
+        <td>LocalDateTime</td>
+    </tr>
+    <tr>
+        <td>Microsoft SQL Server</td>
+        <td>decimal</td>
+        <td>BigDecimal</td>
+    </tr>
+    <tr>
+        <td>Microsoft SQL Server</td>
+        <td>int</td>
+        <td>Integer</td>
+    </tr>
+    <tr>
+        <td>Microsoft SQL Server</td>
+        <td>nvarchar</td>
+        <td>String</td>
+    </tr>
+    <tr>
+        <td>Microsoft SQL Server</td>
+        <td>varchar</td>
         <td>String</td>
     </tr>
     <tr>
@@ -185,7 +225,7 @@ Below the default mapping table used by the plugin:<br/><br/>
 
     <change-notes><![CDATA[
     <ul>
-        <li>[Fixed] NoClassDefFoundError with IDEA 2023.1 (GitHub <a href="https://github.com/Jukien/POJO-Generator/issues/26">#26</a>)</li>
+        <li>[New] Microsoft SQL Server Database support (GitHub <a href="https://github.com/Jukien/POJO-Generator/issues/27">#27</a>)</li>
     </ul>
     ]]></change-notes>
 

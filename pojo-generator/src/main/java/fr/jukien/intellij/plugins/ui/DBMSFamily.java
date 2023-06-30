@@ -11,14 +11,15 @@ import javax.swing.*;
  * Created on 24/08/2019
  *
  * @author JDI
- * @version 2.3.0
+ * @version 2.5.0
  * @since 2.0.0
  */
 public enum DBMSFamily implements Iconable {
     H2("H2", AllIcons.Providers.H2, "VARCHAR", "String"),
     MYSQL("MySQL", AllIcons.Providers.Mysql, "varchar", "String"),
     ORACLE("Oracle", AllIcons.Providers.Oracle, "VARCHAR2", "String"),
-    POSTGRES("PostgreSQL", AllIcons.Providers.Postgresql, "varchar", "String");
+    POSTGRES("PostgreSQL", AllIcons.Providers.Postgresql, "varchar", "String"),
+    SQLSERVER("Microsoft SQL Server", AllIcons.Providers.SqlServer, "varchar", "String");
 
     private final String name;
     private final Icon icon;

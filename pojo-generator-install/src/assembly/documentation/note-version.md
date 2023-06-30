@@ -1,6 +1,12 @@
 #### Changelog
 
 ##### Version ${parent.version} - Published on ${timestamp}
+###### New
+- Microsoft SQL Server Database support (GitHub [#27](https://github.com/Jukien/POJO-Generator/issues/27))
+
+***
+
+##### Version 2.4.0 - Published on 31/03/2023
 ###### Fixed
 - NoClassDefFoundError with IDEA 2023.1 (GitHub [#26](https://github.com/Jukien/POJO-Generator/issues/26))
 
