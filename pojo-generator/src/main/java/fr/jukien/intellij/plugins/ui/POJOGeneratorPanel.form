@@ -54,7 +54,7 @@
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Add @GeneratedValue annotation for auto incremental sequences (H2, MySQL and PostgreSQL)"/>
+              <text value="Add @GeneratedValue annotation for auto incremental sequences (H2, Microsoft SQL Server, MySQL and PostgreSQL)"/>
             </properties>
           </component>
           <component id="74200" class="javax.swing.JCheckBox" binding="manyToOneAndJoinColumnAnnotationsCheckBox" default-binding="true">
