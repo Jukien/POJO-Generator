@@ -1,6 +1,7 @@
 package fr.jukien.intellij.plugins.action;
 
 import com.intellij.database.psi.DbTable;
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
@@ -15,7 +16,6 @@ import fr.jukien.intellij.plugins.ui.JPAMappingSettings;
 import fr.jukien.intellij.plugins.ui.POJOGeneratorSettings;
 import fr.jukien.intellij.plugins.util.Field;
 import fr.jukien.intellij.plugins.util.TableInfo;
-import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.MalformedURLException;
@@ -29,11 +29,11 @@ import static fr.jukien.intellij.plugins.util.Util.*;
  * Created on 25/04/2019
  *
  * @author JDI
- * @version 2.4.0
+ * @version 2.6.0
  * @since 1.0.0
  */
 public class DTO extends AnAction {
-    private String actionText = StringUtils.EMPTY;
+    private String actionText = "";
 
     @Override
     public void actionPerformed(AnActionEvent anActionEvent) {
@@ -84,9 +84,9 @@ public class DTO extends AnAction {
 
                 StringBuilder javaTextFile = new StringBuilder();
                 //javaTextFile.append("\n");
-                //javaTextFile.append("import javax.persistence.*;").append("\n");
+                javaTextFile.append(pojoGeneratorSettings.getHeaderDTO()).append("\n");
 
-                javaTextFile.append("\n");
+//                javaTextFile.append("\n");
                 javaTextFile.append("public class ").append(className).append(" {").append("\n");
 
                 for (Field field : fields) {
@@ -111,5 +111,10 @@ public class DTO extends AnAction {
 
         checkActionVisibility(anActionEvent, actionText);
         super.update(anActionEvent);
+    }
+
+    @Override
+    public @NotNull ActionUpdateThread getActionUpdateThread() {
+        return ActionUpdateThread.BGT;
     }
 }

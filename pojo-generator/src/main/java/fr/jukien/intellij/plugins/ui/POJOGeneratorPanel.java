@@ -6,7 +6,7 @@ import javax.swing.*;
  * Created on 24/04/2019
  *
  * @author JDI
- * @version 2.3.0
+ * @version 2.6.0
  * @since 1.0.0
  */
 public class POJOGeneratorPanel {
@@ -27,6 +27,8 @@ public class POJOGeneratorPanel {
     private JTextField prefixDTOTextField;
     private JTextField suffixDTOTextField;
     private JCheckBox alwaysShowDifferencesBetweenFilesCheckBox;
+    private JTextArea headerEntityTextArea;
+    private JTextArea headerDTOTextArea;
 
     public POJOGeneratorPanel(POJOGeneratorSettings pojoGeneratorSettings) {
         // Initialise l'interface graphique avec les settings qui ont été enregistrés avant
@@ -44,6 +46,8 @@ public class POJOGeneratorPanel {
         prefixDTOTextField.setText(pojoGeneratorSettings.getPrefixDto());
         suffixDTOTextField.setText(pojoGeneratorSettings.getSuffixDto());
         alwaysShowDifferencesBetweenFilesCheckBox.setSelected(pojoGeneratorSettings.getAlwaysShowDifferencesBetweenFiles());
+        headerEntityTextArea.setText(pojoGeneratorSettings.getHeaderEntity());
+        headerDTOTextArea.setText(pojoGeneratorSettings.getHeaderDTO());
     }
 
     public JPanel getPanel() {
@@ -112,5 +116,13 @@ public class POJOGeneratorPanel {
 
     public JCheckBox getAlwaysShowDifferencesBetweenFilesCheckBox() {
         return alwaysShowDifferencesBetweenFilesCheckBox;
+    }
+
+    public JTextArea getHeaderEntityTextArea() {
+        return headerEntityTextArea;
+    }
+
+    public JTextArea getHeaderDTOTextArea() {
+        return headerDTOTextArea;
     }
 }

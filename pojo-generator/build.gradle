@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.jetbrains.intellij' version '1.14.2'
+    id 'org.jetbrains.intellij' version '1.17.4'
 }
 
 group '${project.groupId}'
@@ -18,7 +18,7 @@ repositories {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version = '2023.1'
+    version = '2024.1'
     type = 'IU'
     plugins = ['java', 'DatabaseTools']
     updateSinceUntilBuild = false

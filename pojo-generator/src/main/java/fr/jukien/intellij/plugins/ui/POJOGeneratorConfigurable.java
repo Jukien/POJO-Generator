@@ -11,7 +11,7 @@ import javax.swing.*;
  * Created on 24/04/2019
  *
  * @author JDI
- * @version 2.4.0
+ * @version 2.6.0
  * @since 1.0.0
  */
 public class POJOGeneratorConfigurable implements Configurable {
@@ -61,6 +61,8 @@ public class POJOGeneratorConfigurable implements Configurable {
         if (!pojoGeneratorPanel.getPrefixDTOTextField().getText().equals(pojoGeneratorSettings.getPrefixDto())) return true;
         if (!pojoGeneratorPanel.getSuffixDTOTextField().getText().equals(pojoGeneratorSettings.getSuffixDto())) return true;
         if (pojoGeneratorPanel.getAlwaysShowDifferencesBetweenFilesCheckBox().isSelected() != pojoGeneratorSettings.getAlwaysShowDifferencesBetweenFiles()) return true;
+        if (!pojoGeneratorPanel.getHeaderEntityTextArea().getText().equals(pojoGeneratorSettings.getHeaderEntity())) return true;
+        if (!pojoGeneratorPanel.getHeaderDTOTextArea().getText().equals(pojoGeneratorSettings.getHeaderDTO())) return true;
         return false;
     }
 
@@ -80,6 +82,8 @@ public class POJOGeneratorConfigurable implements Configurable {
         pojoGeneratorSettings.setPrefixDto(pojoGeneratorPanel.getPrefixDTOTextField().getText());
         pojoGeneratorSettings.setSuffixDto(pojoGeneratorPanel.getSuffixDTOTextField().getText());
         pojoGeneratorSettings.setAlwaysShowDifferencesBetweenFiles(pojoGeneratorPanel.getAlwaysShowDifferencesBetweenFilesCheckBox().isSelected());
+        pojoGeneratorSettings.setHeaderEntity(pojoGeneratorPanel.getHeaderEntityTextArea().getText());
+        pojoGeneratorSettings.setHeaderDTO(pojoGeneratorPanel.getHeaderDTOTextArea().getText());
     }
 
     private boolean isGenerateCompositePrimaryKeyEnabled() {

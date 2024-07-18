@@ -36,6 +36,8 @@ public class POJOGeneratorSettings implements PersistentStateComponent<POJOGener
     private String prefixDto;
     private String suffixDto;
     private Boolean alwaysShowDifferencesBetweenFiles;
+    private String headerEntity;
+    private String headerDTO;
 
     public POJOGeneratorSettings() {
         capitalize = false;
@@ -52,6 +54,8 @@ public class POJOGeneratorSettings implements PersistentStateComponent<POJOGener
         prefixDto = "";
         suffixDto = "DTO";
         alwaysShowDifferencesBetweenFiles = false;
+        headerEntity = "\nimport jakarta.persistence.*;\n";
+        headerDTO = "";
     }
 
     @Nullable
@@ -191,5 +195,21 @@ public class POJOGeneratorSettings implements PersistentStateComponent<POJOGener
 
     public void setAlwaysShowDifferencesBetweenFiles(Boolean alwaysShowDifferencesBetweenFiles) {
         this.alwaysShowDifferencesBetweenFiles = alwaysShowDifferencesBetweenFiles;
+    }
+
+    public String getHeaderEntity() {
+        return headerEntity;
+    }
+
+    public void setHeaderEntity(String headerEntity) {
+        this.headerEntity = headerEntity;
+    }
+
+    public String getHeaderDTO() {
+        return headerDTO;
+    }
+
+    public void setHeaderDTO(String headerDTO) {
+        this.headerDTO = headerDTO;
     }
 }
