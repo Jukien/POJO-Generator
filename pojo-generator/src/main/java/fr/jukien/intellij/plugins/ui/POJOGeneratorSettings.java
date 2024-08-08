@@ -37,6 +37,7 @@ public class POJOGeneratorSettings implements PersistentStateComponent<POJOGener
     private String suffixDto;
     private Boolean alwaysShowDifferencesBetweenFiles;
     private String headerEntity;
+    private String headerEntityIdClass;
     private String headerDTO;
 
     public POJOGeneratorSettings() {
@@ -54,8 +55,27 @@ public class POJOGeneratorSettings implements PersistentStateComponent<POJOGener
         prefixDto = "";
         suffixDto = "DTO";
         alwaysShowDifferencesBetweenFiles = false;
-        headerEntity = "\nimport jakarta.persistence.*;\n";
-        headerDTO = "";
+
+        headerEntity = """
+                                
+                import jakarta.persistence.*;
+                                
+                @Entity
+                @Table(name = "${TABLE_NAME}", schema = "${SCHEMA_NAME}")
+                public class ${CLASS_NAME} {""";
+
+        headerEntityIdClass = """
+                                
+                import jakarta.persistence.*;
+                                
+                @Entity
+                @IdClass(${ID_CLASS_NAME}.class)
+                @Table(name = "${TABLE_NAME}", schema = "${SCHEMA_NAME}")
+                public class ${CLASS_NAME} {""";
+
+        headerDTO = """
+                                
+                public class ${CLASS_NAME} {""";
     }
 
     @Nullable
@@ -203,6 +223,14 @@ public class POJOGeneratorSettings implements PersistentStateComponent<POJOGener
 
     public void setHeaderEntity(String headerEntity) {
         this.headerEntity = headerEntity;
+    }
+
+    public String getHeaderEntityIdClass() {
+        return headerEntityIdClass;
+    }
+
+    public void setHeaderEntityIdClass(String headerEntityIdClass) {
+        this.headerEntityIdClass = headerEntityIdClass;
     }
 
     public String getHeaderDTO() {

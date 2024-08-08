@@ -81,16 +81,25 @@ public class Entity extends AnAction {
                 TableInfo tableInfo = new TableInfo((DbTable) psiElement);
                 LinkedHashSet<Field> fields = getFields((DbTable) psiElement, jpaMappingSettings);
 
+                String header;
+                if (pojoGeneratorSettings.getGenerateCompositePrimaryKey() && pojoGeneratorSettings.getGenerateCompositePrimaryKeyWithIdClassAnnotation()) {
+                    header = pojoGeneratorSettings.getHeaderEntityIdClass();
+                } else {
+                    header = pojoGeneratorSettings.getHeaderEntity();
+                }
+
                 String classNameComposite = null;
                 if (isCompositePrimaryKeyAvailable(pojoGeneratorSettings, tableInfo)) {
                     classNameComposite = String.format("%s%s%s", pojoGeneratorSettings.getPrefixCompositePrimaryKey(), javaName(tableInfo.getTableName(), true), pojoGeneratorSettings.getSuffixCompositePrimaryKey());
 
+                    header = header.replace("${ID_CLASS_NAME}", classNameComposite);
+
                     StringBuilder javaTextFile = new StringBuilder();
                     javaTextFile.append("\n");
 
-                    if (pojoGeneratorSettings.getGenerateCompositePrimaryKeyWithEmbeddedIdAnnotation()) {
-                        javaTextFile.append(pojoGeneratorSettings.getHeaderEntity()).append("\n");
-                    }
+                    /*if (pojoGeneratorSettings.getGenerateCompositePrimaryKeyWithEmbeddedIdAnnotation()) {
+                        javaTextFile.append("import javax.persistence.*;").append("\n");
+                    }*/
                     javaTextFile.append("import java.io.Serializable;").append("\n");
 
                     javaTextFile.append("\n");
@@ -149,13 +158,21 @@ public class Entity extends AnAction {
 
                 StringBuilder javaTextFile = new StringBuilder();
 //                javaTextFile.append("\n");
-                javaTextFile.append(pojoGeneratorSettings.getHeaderEntity()).append("\n");
+                if (pojoGeneratorSettings.getCapitalize()) {
+                    header = header.replace("${TABLE_NAME}", tableInfo.getTableName().toUpperCase());
+                } else {
+                    header = header.replace("${TABLE_NAME}", tableInfo.getTableName());
+                }
+                header = header.replace("${SCHEMA_NAME}", tableInfo.getSchemaName());
+                header = header.replace("${CLASS_NAME}", className);
+
+                javaTextFile.append(header).append("\n");
 
 //                javaTextFile.append("\n");
-                javaTextFile.append("@Entity").append("\n");
-                if (isCompositePrimaryKeyAvailable(pojoGeneratorSettings, tableInfo) && pojoGeneratorSettings.getGenerateCompositePrimaryKeyWithIdClassAnnotation()) {
+//                javaTextFile.append("@Entity").append("\n");
+                /*if (isCompositePrimaryKeyAvailable(pojoGeneratorSettings, tableInfo) && pojoGeneratorSettings.getGenerateCompositePrimaryKeyWithIdClassAnnotation()) {
                     javaTextFile.append("@IdClass(").append(classNameComposite).append(".class)").append("\n");
-                }
+                }*/
                 if (isCompositePrimaryKeyAvailable(pojoGeneratorSettings, tableInfo) && pojoGeneratorSettings.getGenerateCompositePrimaryKeyWithEmbeddedIdAnnotation()) {
                     LinkedHashSet<Field> fieldsWithoutPrimary = new LinkedHashSet<>();
 
@@ -173,16 +190,16 @@ public class Entity extends AnAction {
                     fields.clear();
                     fields.addAll(fieldsWithoutPrimary);
                 }
-                if (pojoGeneratorSettings.getCapitalize()) {
+                /*if (pojoGeneratorSettings.getCapitalize()) {
                     javaTextFile.append("@Table(name = \"").append(tableInfo.getTableName().toUpperCase());
                 } else {
                     javaTextFile.append("@Table(name = \"").append(tableInfo.getTableName());
-                }
-                if (pojoGeneratorSettings.getWithSchemaAttribute()) {
+                }*/
+                /*if (pojoGeneratorSettings.getWithSchemaAttribute()) {
                     javaTextFile.append("\", schema = \"").append(tableInfo.getSchemaName());
-                }
-                javaTextFile.append("\")").append("\n");
-                javaTextFile.append("public class ").append(className).append(" {").append("\n");
+                }*/
+//                javaTextFile.append("\")").append("\n");
+//                javaTextFile.append("public class ").append(className).append(" {").append("\n");
 
                 for (Field field : fields) {
                     if (field.getEmbeddedId()) {

@@ -33,7 +33,7 @@
                         <configuration>
                             <resources>
                                 <resource>
-                                    <directory>/</directory>
+                                    <directory>${basedir}/</directory>
                                     <includes>
                                         <include>src/**</include>
                                         <include>gradle.properties</include>
@@ -54,7 +54,7 @@
                         <configuration>
                             <resources>
                                 <resource>
-                                    <directory>/</directory>
+                                    <directory>${basedir}/</directory>
                                     <includes>
                                         <include>build.gradle</include>
                                     </includes>
@@ -97,7 +97,7 @@
                                 <argument>clean</argument>
                                 <argument>-Dorg.gradle.java.home=${java.home}</argument>
                                 <argument>--project-dir</argument>
-                                <argument>/${targetGradle}</argument>
+                                <argument>${basedir}/${targetGradle}</argument>
                             </arguments>
                         </configuration>
                         <goals>
@@ -113,7 +113,7 @@
                                 <argument>buildPlugin</argument>
                                 <argument>-Dorg.gradle.java.home=${java.home}</argument>
                                 <argument>--project-dir</argument>
-                                <argument>/${targetGradle}</argument>
+                                <argument>${basedir}/${targetGradle}</argument>
                             </arguments>
                         </configuration>
                         <goals>

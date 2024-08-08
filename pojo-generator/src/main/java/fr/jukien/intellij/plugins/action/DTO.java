@@ -84,10 +84,12 @@ public class DTO extends AnAction {
 
                 StringBuilder javaTextFile = new StringBuilder();
                 //javaTextFile.append("\n");
-                javaTextFile.append(pojoGeneratorSettings.getHeaderDTO()).append("\n");
+                String header = pojoGeneratorSettings.getHeaderDTO().replace("${CLASS_NAME}", className);
+
+                javaTextFile.append(header).append("\n");
 
 //                javaTextFile.append("\n");
-                javaTextFile.append("public class ").append(className).append(" {").append("\n");
+//                javaTextFile.append("public class ").append(className).append(" {").append("\n");
 
                 for (Field field : fields) {
                     javaTextFile.append("    private ").append(field.getJavaType()).append(" ").append(javaName(field.getName(), false)).append(";").append("\n");
