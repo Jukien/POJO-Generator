@@ -66,11 +66,11 @@ public class DTO extends AnAction {
                     e.printStackTrace();
                 }
             }
-            lastChoosedFile = FileChooser.chooseFile(descriptor, project, chooseFile);
-            if (null == lastChoosedFile) {
+            lastFileChosen = FileChooser.chooseFile(descriptor, project, chooseFile);
+            if (null == lastFileChosen) {
                 return;
             } else {
-                pojoGeneratorSettings.setDtoFolderPath(lastChoosedFile.getPath());
+                pojoGeneratorSettings.setDtoFolderPath(lastFileChosen.getPath());
             }
 
             for (PsiElement psiElement : psiElements) {

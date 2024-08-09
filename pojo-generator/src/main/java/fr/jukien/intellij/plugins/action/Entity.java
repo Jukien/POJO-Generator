@@ -66,11 +66,11 @@ public class Entity extends AnAction {
                     e.printStackTrace();
                 }
             }
-            lastChoosedFile = FileChooser.chooseFile(descriptor, project, chooseFile);
-            if (null == lastChoosedFile) {
+            lastFileChosen = FileChooser.chooseFile(descriptor, project, chooseFile);
+            if (null == lastFileChosen) {
                 return;
             } else {
-                pojoGeneratorSettings.setEntityFolderPath(lastChoosedFile.getPath());
+                pojoGeneratorSettings.setEntityFolderPath(lastFileChosen.getPath());
             }
 
             for (PsiElement psiElement : psiElements) {
