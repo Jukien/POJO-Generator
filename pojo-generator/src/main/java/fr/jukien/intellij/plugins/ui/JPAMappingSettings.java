@@ -16,7 +16,7 @@ import java.util.UUID;
  * Created on 24/08/2019
  *
  * @author JDI
- * @version 2.5.0
+ * @version 2.6.0
  * @since 2.0.0
  */
 @State(
@@ -65,6 +65,9 @@ public class JPAMappingSettings implements PersistentStateComponent<JPAMappingSe
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.POSTGRES, "boolean", "Boolean"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.POSTGRES, "date", "LocalDate"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.POSTGRES, "integer", "Long"),
+                new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.POSTGRES, "smallint", "Integer"),
+                new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.POSTGRES, "timestamp", "LocalDateTime"),
+                new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.POSTGRES, "uuid", "UUID"),
                 new ConfigurableJPAMapping(UUID.randomUUID(), DBMSFamily.POSTGRES, "varchar", "String")
         );
     }

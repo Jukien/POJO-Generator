@@ -16,6 +16,7 @@ import javax.swing.*;
  */
 public class JPAMappingConfigurable implements Configurable {
     private final JPAMappingSettings jpaMappingSettings;
+
     private JPAMappingPanel jpaMappingPanel;
 
     public JPAMappingConfigurable(Project project) {

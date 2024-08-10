@@ -225,7 +225,13 @@ Below the default mapping table used by the plugin:<br/><br/>
 
     <change-notes><![CDATA[
     <ul>
-        <li>[New] Microsoft SQL Server Database support (GitHub <a href="https://github.com/Jukien/POJO-Generator/issues/27">#27</a>)</li>
+        <li>[New] Possibility to customize the header template of the class:</li>
+        <ul>
+            <li>Add default import (GitHub <a href="https://github.com/Jukien/POJO-Generator/issues/25">#25</a>)</li>
+            <li>Add Lombok annotation for example (GitHub <a href="https://github.com/Jukien/POJO-Generator/issues/21">#21</a>)</li>
+        </ul>
+        <li>[Fixed] <code>@GeneratedValue</code> was not generated for Postgres database</li>
+        <li>[Fixed] Fixed an internal error from the plugin on the IDE</li>
     </ul>
     ]]></change-notes>
 

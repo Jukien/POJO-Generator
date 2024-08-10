@@ -1,6 +1,7 @@
 package fr.jukien.intellij.plugins.action;
 
 import com.intellij.database.psi.DbTable;
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
@@ -15,7 +16,6 @@ import fr.jukien.intellij.plugins.ui.JPAMappingSettings;
 import fr.jukien.intellij.plugins.ui.POJOGeneratorSettings;
 import fr.jukien.intellij.plugins.util.Field;
 import fr.jukien.intellij.plugins.util.TableInfo;
-import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.MalformedURLException;
@@ -29,11 +29,11 @@ import static fr.jukien.intellij.plugins.util.Util.*;
  * Created on 19/04/2019
  *
  * @author JDI
- * @version 2.4.0
+ * @version 2.6.0
  * @since 1.0.0
  */
 public class Entity extends AnAction {
-    private String actionText = StringUtils.EMPTY;
+    private String actionText = "";
 
     @Override
     public void actionPerformed(AnActionEvent anActionEvent) {
@@ -66,11 +66,11 @@ public class Entity extends AnAction {
                     e.printStackTrace();
                 }
             }
-            lastChoosedFile = FileChooser.chooseFile(descriptor, project, chooseFile);
-            if (null == lastChoosedFile) {
+            lastFileChosen = FileChooser.chooseFile(descriptor, project, chooseFile);
+            if (null == lastFileChosen) {
                 return;
             } else {
-                pojoGeneratorSettings.setEntityFolderPath(lastChoosedFile.getPath());
+                pojoGeneratorSettings.setEntityFolderPath(lastFileChosen.getPath());
             }
 
             for (PsiElement psiElement : psiElements) {
@@ -81,16 +81,25 @@ public class Entity extends AnAction {
                 TableInfo tableInfo = new TableInfo((DbTable) psiElement);
                 LinkedHashSet<Field> fields = getFields((DbTable) psiElement, jpaMappingSettings);
 
+                String header;
+                if (pojoGeneratorSettings.getGenerateCompositePrimaryKey() && pojoGeneratorSettings.getGenerateCompositePrimaryKeyWithIdClassAnnotation()) {
+                    header = pojoGeneratorSettings.getHeaderEntityIdClass();
+                } else {
+                    header = pojoGeneratorSettings.getHeaderEntity();
+                }
+
                 String classNameComposite = null;
                 if (isCompositePrimaryKeyAvailable(pojoGeneratorSettings, tableInfo)) {
                     classNameComposite = String.format("%s%s%s", pojoGeneratorSettings.getPrefixCompositePrimaryKey(), javaName(tableInfo.getTableName(), true), pojoGeneratorSettings.getSuffixCompositePrimaryKey());
 
+                    header = header.replace("${ID_CLASS_NAME}", classNameComposite);
+
                     StringBuilder javaTextFile = new StringBuilder();
                     javaTextFile.append("\n");
 
-                    if (pojoGeneratorSettings.getGenerateCompositePrimaryKeyWithEmbeddedIdAnnotation()) {
+                    /*if (pojoGeneratorSettings.getGenerateCompositePrimaryKeyWithEmbeddedIdAnnotation()) {
                         javaTextFile.append("import javax.persistence.*;").append("\n");
-                    }
+                    }*/
                     javaTextFile.append("import java.io.Serializable;").append("\n");
 
                     javaTextFile.append("\n");
@@ -148,14 +157,22 @@ public class Entity extends AnAction {
                 String className = String.format("%s%s%s", pojoGeneratorSettings.getPrefixEntity(), javaName(tableInfo.getTableName(), true), pojoGeneratorSettings.getSuffixEntity());
 
                 StringBuilder javaTextFile = new StringBuilder();
-                javaTextFile.append("\n");
-                javaTextFile.append("import javax.persistence.*;").append("\n");
-
-                javaTextFile.append("\n");
-                javaTextFile.append("@Entity").append("\n");
-                if (isCompositePrimaryKeyAvailable(pojoGeneratorSettings, tableInfo) && pojoGeneratorSettings.getGenerateCompositePrimaryKeyWithIdClassAnnotation()) {
-                    javaTextFile.append("@IdClass(").append(classNameComposite).append(".class)").append("\n");
+//                javaTextFile.append("\n");
+                if (pojoGeneratorSettings.getCapitalize()) {
+                    header = header.replace("${TABLE_NAME}", tableInfo.getTableName().toUpperCase());
+                } else {
+                    header = header.replace("${TABLE_NAME}", tableInfo.getTableName());
                 }
+                header = header.replace("${SCHEMA_NAME}", tableInfo.getSchemaName());
+                header = header.replace("${CLASS_NAME}", className);
+
+                javaTextFile.append(header).append("\n");
+
+//                javaTextFile.append("\n");
+//                javaTextFile.append("@Entity").append("\n");
+                /*if (isCompositePrimaryKeyAvailable(pojoGeneratorSettings, tableInfo) && pojoGeneratorSettings.getGenerateCompositePrimaryKeyWithIdClassAnnotation()) {
+                    javaTextFile.append("@IdClass(").append(classNameComposite).append(".class)").append("\n");
+                }*/
                 if (isCompositePrimaryKeyAvailable(pojoGeneratorSettings, tableInfo) && pojoGeneratorSettings.getGenerateCompositePrimaryKeyWithEmbeddedIdAnnotation()) {
                     LinkedHashSet<Field> fieldsWithoutPrimary = new LinkedHashSet<>();
 
@@ -173,17 +190,18 @@ public class Entity extends AnAction {
                     fields.clear();
                     fields.addAll(fieldsWithoutPrimary);
                 }
-                if (pojoGeneratorSettings.getCapitalize()) {
+                /*if (pojoGeneratorSettings.getCapitalize()) {
                     javaTextFile.append("@Table(name = \"").append(tableInfo.getTableName().toUpperCase());
                 } else {
                     javaTextFile.append("@Table(name = \"").append(tableInfo.getTableName());
-                }
-                if (pojoGeneratorSettings.getWithSchemaAttribute()) {
+                }*/
+                /*if (pojoGeneratorSettings.getWithSchemaAttribute()) {
                     javaTextFile.append("\", schema = \"").append(tableInfo.getSchemaName());
-                }
-                javaTextFile.append("\")").append("\n");
-                javaTextFile.append("public class ").append(className).append(" {").append("\n");
+                }*/
+//                javaTextFile.append("\")").append("\n");
+//                javaTextFile.append("public class ").append(className).append(" {").append("\n");
 
+                int counter = 0;
                 for (Field field : fields) {
                     if (field.getEmbeddedId()) {
                         javaTextFile.append("    @EmbeddedId").append("\n");
@@ -214,10 +232,18 @@ public class Entity extends AnAction {
                         javaTextFile.append(")").append("\n");
                     }
                     javaTextFile.append("    private ").append(field.getJavaType()).append(" ").append(javaName(field.getName(), false)).append(";").append("\n");
-                    javaTextFile.append("\n");
+
+                    if (counter < fields.size() - 1 || pojoGeneratorSettings.getGenerateGetterAndSetter()) {
+                        javaTextFile.append("\n");
+                    }
+
+                    counter++;
                 }
 
-                addGetterSetter(fields, javaTextFile);
+                if (pojoGeneratorSettings.getGenerateGetterAndSetter()) {
+                    addGetterSetter(fields, javaTextFile);
+                }
+
                 javaTextFile.append("}").append("\n");
 
                 String fileName = String.format("%s%s", className, ".java");
@@ -250,5 +276,10 @@ public class Entity extends AnAction {
 
         checkActionVisibility(anActionEvent, actionText);
         super.update(anActionEvent);
+    }
+
+    @Override
+    public @NotNull ActionUpdateThread getActionUpdateThread() {
+        return ActionUpdateThread.BGT;
     }
 }
