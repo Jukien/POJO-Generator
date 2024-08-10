@@ -32,6 +32,7 @@ public class POJOGeneratorSettings implements PersistentStateComponent<POJOGener
     private String entityFolderPath;
     private String prefixCompositePrimaryKey;
     private String suffixCompositePrimaryKey;
+    private Boolean generateGetterAndSetter;
     private String prefixEntity;
     private String suffixEntity;
     private String prefixDto;
@@ -51,6 +52,7 @@ public class POJOGeneratorSettings implements PersistentStateComponent<POJOGener
         generateCompositePrimaryKeyWithEmbeddedIdAnnotation = false;
         prefixCompositePrimaryKey = "";
         suffixCompositePrimaryKey = "Id";
+        generateGetterAndSetter = true;
         prefixEntity = "";
         suffixEntity = "";
         prefixDto = "";
@@ -76,21 +78,21 @@ public class POJOGeneratorSettings implements PersistentStateComponent<POJOGener
                     public class ${CLASS_NAME} {""";
         } else {
             headerEntity = """
-                                
-                import jakarta.persistence.*;
-                                
-                @Entity
+
+                    import jakarta.persistence.*;
+
+                    @Entity
                     @Table(name = "${TABLE_NAME}")
-                public class ${CLASS_NAME} {""";
+                    public class ${CLASS_NAME} {""";
 
             headerEntityIdClass = """
-                                
-                import jakarta.persistence.*;
-                                
-                @Entity
-                @IdClass(${ID_CLASS_NAME}.class)
+
+                    import jakarta.persistence.*;
+                                    
+                    @Entity
+                    @IdClass(${ID_CLASS_NAME}.class)
                     @Table(name = "${TABLE_NAME}")
-                public class ${CLASS_NAME} {""";
+                    public class ${CLASS_NAME} {""";
         }
 
         headerDTO = """
@@ -197,6 +199,14 @@ public class POJOGeneratorSettings implements PersistentStateComponent<POJOGener
 
     public void setSuffixCompositePrimaryKey(String suffixCompositePrimaryKey) {
         this.suffixCompositePrimaryKey = suffixCompositePrimaryKey;
+    }
+
+    public Boolean getGenerateGetterAndSetter() {
+        return generateGetterAndSetter;
+    }
+
+    public void setGenerateGetterAndSetter(Boolean generateGetterAndSetter) {
+        this.generateGetterAndSetter = generateGetterAndSetter;
     }
 
     public String getPrefixEntity() {

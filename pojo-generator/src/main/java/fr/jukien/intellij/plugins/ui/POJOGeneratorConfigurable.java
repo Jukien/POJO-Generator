@@ -60,6 +60,7 @@ public class POJOGeneratorConfigurable implements Configurable {
         if (pojoGeneratorPanel.getEmbeddedIdAnnotationRadioButton().isSelected() != pojoGeneratorSettings.getGenerateCompositePrimaryKeyWithEmbeddedIdAnnotation()) return true;
         if (!pojoGeneratorPanel.getPrefixCompositePrimaryKeyTextField().getText().equals(pojoGeneratorSettings.getPrefixCompositePrimaryKey())) return true;
         if (!pojoGeneratorPanel.getSuffixCompositePrimaryKeyTextField().getText().equals(pojoGeneratorSettings.getSuffixCompositePrimaryKey())) return true;
+        if (pojoGeneratorPanel.getGenerateGetterAndSetterCheckBox().isSelected() != pojoGeneratorSettings.getGenerateGetterAndSetter()) return true;
         if (!pojoGeneratorPanel.getPrefixEntityTextField().getText().equals(pojoGeneratorSettings.getPrefixEntity())) return true;
         if (!pojoGeneratorPanel.getSuffixEntityTextField().getText().equals(pojoGeneratorSettings.getSuffixEntity())) return true;
         if (!pojoGeneratorPanel.getPrefixDTOTextField().getText().equals(pojoGeneratorSettings.getPrefixDto())) return true;
@@ -82,6 +83,7 @@ public class POJOGeneratorConfigurable implements Configurable {
         pojoGeneratorSettings.setGenerateCompositePrimaryKeyWithEmbeddedIdAnnotation(pojoGeneratorPanel.getEmbeddedIdAnnotationRadioButton().isSelected());
         pojoGeneratorSettings.setPrefixCompositePrimaryKey(pojoGeneratorPanel.getPrefixCompositePrimaryKeyTextField().getText());
         pojoGeneratorSettings.setSuffixCompositePrimaryKey(pojoGeneratorPanel.getSuffixCompositePrimaryKeyTextField().getText());
+        pojoGeneratorSettings.setGenerateGetterAndSetter(pojoGeneratorPanel.getGenerateGetterAndSetterCheckBox().isSelected());
         pojoGeneratorSettings.setPrefixEntity(pojoGeneratorPanel.getPrefixEntityTextField().getText());
         pojoGeneratorSettings.setSuffixEntity(pojoGeneratorPanel.getSuffixEntityTextField().getText());
         pojoGeneratorSettings.setPrefixDto(pojoGeneratorPanel.getPrefixDTOTextField().getText());
@@ -102,6 +104,7 @@ public class POJOGeneratorConfigurable implements Configurable {
         pojoGeneratorPanel.getEmbeddedIdAnnotationRadioButton().setSelected(pojoGeneratorSettings.getGenerateCompositePrimaryKeyWithEmbeddedIdAnnotation());
         pojoGeneratorPanel.getPrefixCompositePrimaryKeyTextField().setText(pojoGeneratorSettings.getPrefixCompositePrimaryKey());
         pojoGeneratorPanel.getSuffixCompositePrimaryKeyTextField().setText(pojoGeneratorSettings.getSuffixCompositePrimaryKey());
+        pojoGeneratorPanel.getGenerateGetterAndSetterCheckBox().setSelected(pojoGeneratorSettings.getGenerateGetterAndSetter());
         pojoGeneratorPanel.getPrefixEntityTextField().setText(pojoGeneratorSettings.getPrefixEntity());
         pojoGeneratorPanel.getSuffixEntityTextField().setText(pojoGeneratorSettings.getSuffixEntity());
         pojoGeneratorPanel.getPrefixDTOTextField().setText(pojoGeneratorSettings.getPrefixDto());

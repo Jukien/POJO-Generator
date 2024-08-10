@@ -2,6 +2,18 @@
 
 ##### Version ${parent.version} - Published on ${timestamp}
 ###### New
+- Possibility to customize the header template of the class:
+  - Add default import (GitHub [#25](https://github.com/Jukien/POJO-Generator/issues/25))
+  - Add Lombok annotation for example (GitHub [#21](https://github.com/Jukien/POJO-Generator/issues/21)) 
+
+###### Fixed
+- `@GeneratedValue` was not generated for Postgres database
+- Fixed an internal error from the plugin on the IDE
+
+***
+
+##### Version 2.5.0 - Published on 30/06/2023
+###### New
 - Microsoft SQL Server Database support (GitHub [#27](https://github.com/Jukien/POJO-Generator/issues/27))
 
 ***

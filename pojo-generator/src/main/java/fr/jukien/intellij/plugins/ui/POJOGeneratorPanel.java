@@ -22,6 +22,7 @@ public class POJOGeneratorPanel {
     private JTextField prefixCompositePrimaryKeyTextField;
     private JLabel suffixCompositePrimaryKeyLabel;
     private JTextField suffixCompositePrimaryKeyTextField;
+    private JCheckBox generateGetterAndSetterCheckBox;
     private JTextField prefixEntityTextField;
     private JTextField suffixEntityTextField;
     private JTextField prefixDTOTextField;
@@ -44,6 +45,7 @@ public class POJOGeneratorPanel {
         embeddedIdAnnotationRadioButton.setSelected(pojoGeneratorSettings.getGenerateCompositePrimaryKeyWithEmbeddedIdAnnotation());
         prefixCompositePrimaryKeyTextField.setText(pojoGeneratorSettings.getPrefixCompositePrimaryKey());
         suffixCompositePrimaryKeyTextField.setText(pojoGeneratorSettings.getSuffixCompositePrimaryKey());
+        generateGetterAndSetterCheckBox.setSelected(pojoGeneratorSettings.getGenerateGetterAndSetter());
         prefixEntityTextField.setText(pojoGeneratorSettings.getPrefixEntity());
         suffixEntityTextField.setText(pojoGeneratorSettings.getSuffixEntity());
         prefixDTOTextField.setText(pojoGeneratorSettings.getPrefixDto());
@@ -113,6 +115,10 @@ public class POJOGeneratorPanel {
 
     public JTextField getSuffixCompositePrimaryKeyTextField() {
         return suffixCompositePrimaryKeyTextField;
+    }
+
+    public JCheckBox getGenerateGetterAndSetterCheckBox() {
+        return generateGetterAndSetterCheckBox;
     }
 
     public JTextField getPrefixEntityTextField() {

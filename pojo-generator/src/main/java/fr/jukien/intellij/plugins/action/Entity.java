@@ -201,6 +201,7 @@ public class Entity extends AnAction {
 //                javaTextFile.append("\")").append("\n");
 //                javaTextFile.append("public class ").append(className).append(" {").append("\n");
 
+                int counter = 0;
                 for (Field field : fields) {
                     if (field.getEmbeddedId()) {
                         javaTextFile.append("    @EmbeddedId").append("\n");
@@ -231,10 +232,18 @@ public class Entity extends AnAction {
                         javaTextFile.append(")").append("\n");
                     }
                     javaTextFile.append("    private ").append(field.getJavaType()).append(" ").append(javaName(field.getName(), false)).append(";").append("\n");
-                    javaTextFile.append("\n");
+
+                    if (counter < fields.size() - 1 || pojoGeneratorSettings.getGenerateGetterAndSetter()) {
+                        javaTextFile.append("\n");
+                    }
+
+                    counter++;
                 }
 
-                addGetterSetter(fields, javaTextFile);
+                if (pojoGeneratorSettings.getGenerateGetterAndSetter()) {
+                    addGetterSetter(fields, javaTextFile);
+                }
+
                 javaTextFile.append("}").append("\n");
 
                 String fileName = String.format("%s%s", className, ".java");
