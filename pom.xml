@@ -4,7 +4,7 @@
 
     <groupId>fr.jukien.intellij.plugins</groupId>
     <artifactId>pojo-generator-parent</artifactId>
-    <version>2.5.1-SNAPSHOT</version>
+    <version>2.6.0</version>
     <packaging>pom</packaging>
 
     <name>POJO Generator</name>
@@ -44,6 +44,6 @@
 
     <scm>
         <developerConnection>scm:git:https://github.com/Jukien/POJO-Generator.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>v2.6.0</tag>
     </scm>
 </project>
